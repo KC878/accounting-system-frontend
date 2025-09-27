@@ -5,8 +5,8 @@ export type UserType = {
   username: string;
   password: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 };
 
 export type InputFieldType = {

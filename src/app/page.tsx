@@ -3,14 +3,15 @@
 import Form from "@src/components/Form";
 import { useState } from "react";
 import type { UserType, InputFieldType } from "@src/types/types";
+import { registerUser } from "@src/services/userService";
 
 export default function Home() {
   const [formData, setFormData] = useState<UserType>({
     username: "",
     password: "",
     email: "",
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
   });
 
   const handleChange = (
@@ -21,17 +22,30 @@ export default function Home() {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
     setFormData({
       username: "",
       password: "",
       email: "",
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
     });
-    // You can call an API here
+
+    try {
+      const data: UserType = {
+        password: formData.password,
+        username: formData.username,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        email: formData.email,
+      };
+      const result = await registerUser(data);
+      console.log("User registered: ", result);
+    } catch (err) {
+      console.error("Registration failed: ", err);
+    }
   };
 
   const input: InputFieldType[] = [
