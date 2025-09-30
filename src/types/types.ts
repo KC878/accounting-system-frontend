@@ -14,4 +14,9 @@ export type InputFieldType = {
   label: string;
   name: string;
   type: string;
+  error?: boolean;
+  helperText?: string;
+  inputRule?: {
+    allowOnly?: "letters" | "numbers" | "lettersNumbers";
+  };
 };

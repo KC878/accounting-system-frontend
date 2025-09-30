@@ -6,5 +6,5 @@ import type { UserType } from "@src/types/types"
 export const registerUser = async (data: UserType) => {
   const response = await apiClient.post("api/users/register", data);
 
-  return response.data;
+  return response;
 };

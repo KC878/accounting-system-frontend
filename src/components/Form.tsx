@@ -42,9 +42,10 @@ const Form: React.FC<FormProp> = ({
           {formHeaderTitle}
         </Typography>
         {input.map((item, index) => {
-          const InputField = fields[item.fieldOption];
+          const FieldType = fields[item.fieldOption];
+
           return (
-            <InputField
+            <FieldType
               key={index}
               label={item.label}
               name={item.name}
@@ -54,6 +55,8 @@ const Form: React.FC<FormProp> = ({
               fullWidth
               margin="normal"
               required
+              error={item.error ?? false} // false by default
+              helperText={item.helperText ?? ""}
             />
           );
         })}
@@ -75,7 +78,6 @@ const Form: React.FC<FormProp> = ({
           </Select>
         </FormControl> */}
 
-        
         <Button
           type="submit"
           variant="contained"
