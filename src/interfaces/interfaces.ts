@@ -1,4 +1,4 @@
-import type { UserType, InputFieldType } from "@src/types/types";
+import type { UserType, InputFieldType, HomeModeType } from "@src/types/types";
 
 export interface FormProp {
   formHeaderTitle: string;
@@ -10,4 +10,5 @@ export interface FormProp {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   input: InputFieldType[];
   buttonSubmitName: string;
+  homeMode: HomeModeType;
 }

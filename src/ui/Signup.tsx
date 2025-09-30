@@ -1,12 +1,13 @@
 "use client";
 
 import Form from "@src/components/Form";
-import { useState } from "react";
-import type { UserType, InputFieldType } from "@src/types/types";
+import React, { useState } from "react";
+import type { UserType, InputFieldType, HomeModeType } from "@src/types/types";
 import { registerUser } from "@src/services/userService";
 import { AxiosError } from "axios";
+import { icon } from "@src/constants/icons";
 
-const Signup = () => {
+const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
   const [formData, setFormData] = useState<UserType>({
     username: "",
     password: "",
@@ -43,8 +44,8 @@ const Signup = () => {
     // update form data
     setFormData({
       ...formData,
-      [name]: newValue, // [name] refers to the key of an object 
-     });
+      [name]: newValue, // [name] refers to the key of an object
+    });
 
     // password validation
     if (name === "password" && value.length < 8) {
@@ -57,7 +58,7 @@ const Signup = () => {
       setFormError((prev) => ({ ...prev, [name]: "" }));
     }
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     // final validation before submit
     const newErrors: Partial<UserType> = {}; // meaning error refers to the Key of UserType
@@ -115,6 +116,7 @@ const Signup = () => {
       type: "normal",
       error: !!formError.username,
       helperText: formError.username,
+      icon: icon.username,
     },
     {
       fieldOption: 0,
@@ -123,6 +125,7 @@ const Signup = () => {
       type: "password",
       error: !!formError.password,
       helperText: formError.password,
+      icon: icon.password,
     },
     {
       fieldOption: 0,
@@ -131,6 +134,7 @@ const Signup = () => {
       type: "email",
       error: !!formError.email,
       helperText: formError.email,
+      icon: icon.email,
     },
     {
       fieldOption: 0,
@@ -138,6 +142,7 @@ const Signup = () => {
       name: "first_name",
       type: "text",
       inputRule: { allowOnly: "letters" },
+      icon: icon.name,
     },
     {
       fieldOption: 0,
@@ -145,6 +150,7 @@ const Signup = () => {
       name: "last_name",
       type: "text",
       inputRule: { allowOnly: "letters" },
+      icon: icon.name,
     },
   ];
 
@@ -157,6 +163,10 @@ const Signup = () => {
         handleSubmit={handleSubmit}
         input={input}
         buttonSubmitName={"Signup"}
+        homeMode={{
+          homeUI,
+          setHomeUI,
+        }}
       />
     </div>
   );

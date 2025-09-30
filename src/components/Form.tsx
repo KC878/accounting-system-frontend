@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import type { UserType } from "@src/types/types";
 import type { FormProp } from "@src/interfaces/interfaces";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const fields: React.ElementType[] = [TextField, Select, MenuItem]; // declare this first
 
@@ -21,6 +22,7 @@ const Form: React.FC<FormProp> = ({
   handleSubmit,
   input,
   buttonSubmitName,
+  homeMode,
 }) => {
   return (
     <div>
@@ -29,7 +31,7 @@ const Form: React.FC<FormProp> = ({
         component="form"
         onSubmit={handleSubmit}
         sx={{
-          maxWidth: 400,
+          maxWidth: 500,
           margin: "auto",
           mt: 5,
           p: 3,
@@ -41,23 +43,33 @@ const Form: React.FC<FormProp> = ({
         <Typography variant="h5" mb={2} textAlign="center">
           {formHeaderTitle}
         </Typography>
+
         {input.map((item, index) => {
           const FieldType = fields[item.fieldOption];
+          const Icon = item.icon;
 
           return (
-            <FieldType
-              key={index}
-              label={item.label}
-              name={item.name}
-              type={item.type}
-              value={formData[item.name as keyof UserType] ?? ""}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              required
-              error={item.error ?? false} // false by default
-              helperText={item.helperText ?? ""}
-            />
+            <div className="flex justify-center items-center-safe gap-2 w-[30vw]">
+              <div>
+                <Icon fontSize="large" />
+              </div>
+
+              <div className="flex-1">
+                <FieldType
+                  key={index}
+                  label={item.label}
+                  name={item.name}
+                  type={item.type}
+                  value={formData[item.name as keyof UserType] ?? ""}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                  required
+                  error={item.error ?? false} // false by default
+                  helperText={item.helperText ?? ""}
+                />
+              </div>
+            </div>
           );
         })}
 
@@ -86,6 +98,15 @@ const Form: React.FC<FormProp> = ({
           sx={{ mt: 2 }}
         >
           {buttonSubmitName}
+        </Button>
+        <Button
+          fullWidth
+          sx={{ mt: 2 }}
+          onClick={() =>
+            homeMode.setHomeUI(homeMode.homeUI === "login" ? "signup" : "login")
+          }
+        >
+          {homeMode.homeUI}
         </Button>
       </Box>
     </div>
