@@ -26,3 +26,9 @@ export type HomeModeType = {
   homeUI: string;
   setHomeUI: React.Dispatch<React.SetStateAction<"login" | "signup">>;
 }
+
+export type StatusType = {
+  error?: string;
+  ok?: string;
+  warning?: string;
+}

@@ -1,4 +1,4 @@
-import type { UserType, InputFieldType, HomeModeType } from "@src/types/types";
+import type { UserType, InputFieldType, HomeModeType, StatusType } from "@src/types/types";
 
 export interface FormProp {
   formHeaderTitle: string;
@@ -11,4 +11,10 @@ export interface FormProp {
   input: InputFieldType[];
   buttonSubmitName: string;
   homeMode: HomeModeType;
+}
+
+
+export interface NotificationProp {
+  message: string;
+  severity: "error" | "warning" | "info" | "success";
 }

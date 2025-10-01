@@ -8,3 +8,13 @@ export const registerUser = async (data: UserType) => {
 
   return response;
 };
+
+
+// Login User
+export const loginUser = async (data: UserType) => {
+  const response = await apiClient.post("api/users/login", data, {
+    withCredentials: true, 
+  });
+
+  return response;
+}

@@ -49,7 +49,10 @@ const Form: React.FC<FormProp> = ({
           const Icon = item.icon;
 
           return (
-            <div className="flex justify-center items-center-safe gap-2 w-[30vw]">
+            <div
+              key={index}
+              className="flex justify-center items-center-safe gap-2 w-[30vw]"
+            >
               <div>
                 <Icon fontSize="large" />
               </div>
