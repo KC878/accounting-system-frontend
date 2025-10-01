@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import type { UserType } from "@src/types/types";
 import type { FormProp } from "@src/interfaces/interfaces";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const fields: React.ElementType[] = [TextField, Select, MenuItem]; // declare this first
 
