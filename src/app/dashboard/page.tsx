@@ -1,27 +1,64 @@
 "use client";
 
+import { SvgIconProps, Typography } from "@mui/material";
+import { Button } from "@src/components/Button";
+import { logos } from "@src/constants/logos";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { icon } from "@src/constants/icons";
+
+import type { LeftNavMetaData } from "@src/types/types";
+
+// metadata Left Nav
 
 const Dashboard = () => {
+  const [page, setPage] = useState("");
+
+  const leftNavMetaData: LeftNavMetaData[] = [
+    { key: "dashboard", name: "Dashboard", icon: icon.dashboard },
+    { key: "clients", name: "Clients", icon: icon.client },
+    { key: "proposals", name: "Proposals", icon: icon.proposal },
+    { key: "payments", name: "Payments", icon: icon.payment },
+    { key: "library", name: "Library", icon: icon.library },
+    { key: "apps", name: "Apps", icon: icon.apps },
+    { key: "settings", name: "Settings", icon: icon.settings },
+    { key: "help", name: "Help & Support", icon: icon.help },
+  ];
+  const handleClick = () => {
+    alert(page);
+  };
   return (
-    <div className="flex flex-row h-[150vh] bg-blue-300">
-      <div className="flex-[0_0_17%] bg-amber-300 h-full p-5 flex flex-col">
+    <div className="flex flex-row h-[150vh] bg-[#f6f5fd]">
+      <div className="flex-[0_0_17%] bg-[#ffffff] h-full p-5 flex flex-col">
         <div className="flex-1 flex flex-col gap-2">
-          <div className=" bg-amber-100"> Logo </div>
+          <div className="flex flex-row items-center justify-center w-[10vw] h-[auto] gap-2 cursor-pointer">
+            <div>
+              <Image
+                src={logos.logo}
+                alt="keysiiLogo"
+                style={{
+                  objectFit: "contain",
+                  borderRadius: "50%",
+                }}
+                // onMouseEnter={}
+              />
+            </div>
+            <div>
+              <Typography variant="overline" align="center">
+                {"Keysii"}
+              </Typography>
+            </div>
+          </div>
 
           {/* Page List Tabs */}
           {/* { Navigation Button} */}
           {/* {  Set Fix Height and make the content scrollable } */}
-          <nav className="flex flex-col gap-2 mt-11 overflow-auto">
-            <ol>
-              <li>Dashboard</li>
-              <li>Clients</li>
-              <li>Something</li>
-              <li>Something</li>
-              <li>Something</li>
-              <li>Something</li>
-              <li>Something</li>
-            </ol>
+          <nav className="flex flex-col mt-2 overflow-auto">
+            <Button
+              leftNavMetaData={leftNavMetaData}
+              handleClick={handleClick}
+              setPage={setPage}
+            />
           </nav>
 
           <div className="border mt-50">
@@ -221,7 +258,9 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="flex-[0_0_17%] bg-amber-300 h-full flex flex-col">
+
+      {/* Right Side Bar */}
+      <div className="flex-[0_0_17%] bg-[#ffffff] h-full flex flex-col">
         <div className="flex-row border flex justify-between p-2">
           <p>Logout</p>
           <button>Logout</button>

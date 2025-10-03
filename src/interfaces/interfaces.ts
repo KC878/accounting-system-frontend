@@ -1,4 +1,5 @@
-import type { UserType, InputFieldType, HomeModeType, StatusType } from "@src/types/types";
+import type { UserType, InputFieldType, HomeModeType, StatusType, LeftNavMetaData } from "@src/types/types";
+import { SvgIconProps } from "@mui/material/SvgIcon";
 
 export interface FormProp {
   formHeaderTitle: string;
@@ -18,3 +19,12 @@ export interface NotificationProp {
   message: string;
   severity: "error" | "warning" | "info" | "success";
 }
+
+
+export interface ButtonProp {
+  leftNavMetaData: LeftNavMetaData[];
+  handleClick?: () => void;
+  data?: string; // may change soon
+  setPage?: React.Dispatch<React.SetStateAction<string>>;
+}
+

@@ -32,3 +32,9 @@ export type StatusType = {
   ok?: string;
   warning?: string;
 }
+
+export type LeftNavMetaData = {
+  key: string;
+  name: string;
+  icon: React.ElementType;
+}
