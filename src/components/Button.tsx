@@ -15,8 +15,8 @@ export const Button: React.FC<ButtonProp> = ({
   return (
     <>
       {leftNavMetaData.map((item, index) => (
-        <List>
-          <ListItem disablePadding key={index}>
+        <List key={index}>
+          <ListItem disablePadding>
             <ListItemButton
               onClick={() => {
                 setPage && setPage(item.key);

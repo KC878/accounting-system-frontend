@@ -1,18 +1,22 @@
 "use client";
 
-import { SvgIconProps, Typography } from "@mui/material";
+import { Avatar, Typography } from "@mui/material";
 import { Button } from "@src/components/Button";
 import { logos } from "@src/constants/logos";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { icon } from "@src/constants/icons";
 
 import type { LeftNavMetaData } from "@src/types/types";
+import UserAvatar from "@src/components/UserAvatar";
 
 // metadata Left Nav
 
 const Dashboard = () => {
   const [page, setPage] = useState("");
+
+  // wait and see if there is a use for this
+  const [functionButton, setFunctionButton] = useState("");
 
   const leftNavMetaData: LeftNavMetaData[] = [
     { key: "dashboard", name: "Dashboard", icon: icon.dashboard },
@@ -24,8 +28,15 @@ const Dashboard = () => {
     { key: "settings", name: "Settings", icon: icon.settings },
     { key: "help", name: "Help & Support", icon: icon.help },
   ];
+
+  // passed on Button component
   const handleClick = () => {
     alert(page);
+  };
+
+  // to be used in this page only
+  const functionClick = (func: string) => {
+    alert(func);
   };
   return (
     <div className="flex flex-row h-[150vh] bg-[#f6f5fd]">
@@ -261,15 +272,55 @@ const Dashboard = () => {
 
       {/* Right Side Bar */}
       <div className="flex-[0_0_17%] bg-[#ffffff] h-full flex flex-col">
-        <div className="flex-row border flex justify-between p-2">
-          <p>Logout</p>
-          <button>Logout</button>
+        <div className="flex-row flex justify-between p-2 px-2.5 mt-2">
+          <Typography
+            variant="body1"
+            color="secondary"
+            sx={{
+              fontFamily: "Inter",
+            }}
+          >
+            LOGOUT
+          </Typography>
+          <icon.logout
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              functionClick("logout");
+            }}
+          />
         </div>
-        <div className="flex flex-col bg-white p-10 justify-center items-center gap-5">
-          <div className="h-[5rem] w-[5rem] rounded-full bg-black"></div>
+        <div className="flex flex-col bg-white p-10 justify-center items-center gap-3">
+          <div
+            onClick={() => {
+              alert("profile");
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <UserAvatar alt={"Hannah"} src={""} badge={4} size={100} />
+          </div>
+
           <div className="flex justify-center items-center flex-col">
-            <div>Hannah Erica</div>
-            <div>Accountant</div>
+            {/* Similar -- make it dynamic */}
+            <Typography
+              key={"name"}
+              variant="body1"
+              color="info"
+              sx={{
+                fontFamily: "Inter",
+              }}
+            >
+              Hannah Erica
+            </Typography>
+            <Typography
+              key={"name1"}
+              variant="body2"
+              color="textSecondary"
+              sx={{
+                fontFamily: "Inter",
+              }}
+            >
+              Accountant
+            </Typography>
           </div>
           <div className="flex">
             <button className="bg-blue-400 flex-1 w-[8rem] rounded-3xl">

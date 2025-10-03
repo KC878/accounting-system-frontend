@@ -38,3 +38,4 @@ export type LeftNavMetaData = {
   name: string;
   icon: React.ElementType;
 }
+

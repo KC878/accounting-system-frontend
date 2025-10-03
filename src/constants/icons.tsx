@@ -14,6 +14,9 @@ import AppsIcon from "@mui/icons-material/Apps";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HelpIcon from "@mui/icons-material/Help";
 
+// Right Nav-Button
+import LogoutIcon from "@mui/icons-material/Logout";
+
 export const icon = {
   username: LockPersonIcon,
   password: LockIcon,
@@ -29,4 +32,7 @@ export const icon = {
   apps: AppsIcon,
   settings: SettingsIcon,
   help: HelpIcon,
+
+  // right
+  logout: LogoutIcon,
 };

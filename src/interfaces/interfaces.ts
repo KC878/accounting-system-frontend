@@ -1,5 +1,6 @@
-import type { UserType, InputFieldType, HomeModeType, StatusType, LeftNavMetaData } from "@src/types/types";
+import type { UserType, InputFieldType, HomeModeType, LeftNavMetaData } from "@src/types/types";
 import { SvgIconProps } from "@mui/material/SvgIcon";
+import React from "react";
 
 export interface FormProp {
   formHeaderTitle: string;
@@ -28,3 +29,9 @@ export interface ButtonProp {
   setPage?: React.Dispatch<React.SetStateAction<string>>;
 }
 
+export interface AvatarProp {
+  alt: string;
+  src: string;
+  badge: React.ReactNode;
+  size: number;
+}
