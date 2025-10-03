@@ -1,0 +1,16 @@
+
+services:
+  web:
+    build:
+      context: .
+    container_name: accounting_frontend
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:3000
+    env_file:
+      - .env.development 
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev # hot reload
