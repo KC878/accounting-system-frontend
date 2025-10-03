@@ -28,7 +28,7 @@ export const Button: React.FC<ButtonProp> = ({
                   <item.icon />
                 </ListItemIcon>
               )}
-              <ListItemText primary={item.name} />
+              <ListItemText primary={item.name} sx={{ color: "GrayText" }} />
             </ListItemButton>
           </ListItem>
         </List>
