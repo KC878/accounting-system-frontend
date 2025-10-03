@@ -84,7 +84,7 @@ const Dashboard = () => {
       {/* { make the screen dynamic later on } */}
       <div className="flex-1 p-5 flex flex-col h-[150vh] overflow-auto gap-5">
         {/* 1st Row */}
-        <div className="mt-10 bg-white flex flex-row p-2 justify-between">
+        <div className="mt-4 bg-white flex flex-row p-2 justify-between">
           <div className="bg-red-400 flex border gap-2 justify-center items-center">
             <p className="border">Text Here</p>
             <button className="border">+ </button>
@@ -272,7 +272,7 @@ const Dashboard = () => {
 
       {/* Right Side Bar */}
       <div className="flex-[0_0_17%] bg-[#ffffff] h-full flex flex-col">
-        <div className="flex-row flex justify-between p-2 px-2.5 mt-2">
+        <div className="flex-row flex justify-between p-2 px-2.5 mt-9">
           <Typography
             variant="body1"
             color="secondary"
@@ -303,32 +303,35 @@ const Dashboard = () => {
             {/* Similar -- make it dynamic */}
             <Typography
               key={"name"}
-              variant="body1"
-              color="info"
               sx={{
-                fontFamily: "Inter",
+                fontFamily:
+                  "'Montserrat', 'Open Sans', 'Helvetica', 'Arial', sans-serif",
+                fontWeight: 700,
+                fontSize: 17,
+                letterSpacing: 0.01,
               }}
             >
               Hannah Erica
             </Typography>
             <Typography
               key={"name1"}
-              variant="body2"
-              color="textSecondary"
               sx={{
-                fontFamily: "Inter",
+                fontFamily:
+                  "'Montserrat', 'Open Sans', 'Helvetica', 'Arial', sans-serif",
+                fontWeight: 400,
+                fontSize: "1rem",
               }}
             >
               Accountant
             </Typography>
           </div>
-          <div className="flex">
-            <button className="bg-blue-400 flex-1 w-[8rem] rounded-3xl">
+          <div className="flex" onClick={() => functionClick("MyProfile")}>
+            <div className="bg-[#337c7d] flex-1 w-[8rem] rounded-sm flex justify-center items-center text-white p-1 cursor-pointer">
               My Profile
-            </button>
+            </div>
           </div>
         </div>
-        <div className="flex flex-col h-[20rem] mt-10 bg-amber-800 overflow-auto p-2">
+        <div className="flex flex-col h-[20rem] mt-10 overflow-auto p-2">
           <div>Recent Activity</div>
           <div className="p-4">
             <ol>
