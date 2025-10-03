@@ -4,8 +4,33 @@ import React, { useEffect, useState } from "react";
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-row h-[150vh] w-screen bg-blue-300">
-      <div className="flex-[0_0_17%] bg-amber-300 h-full"> </div>
+    <div className="flex flex-row h-[150vh] bg-blue-300">
+      <div className="flex-[0_0_17%] bg-amber-300 h-full p-5 flex flex-col">
+        <div className="flex-1 flex flex-col gap-2">
+          <div className=" bg-amber-100"> Logo </div>
+
+          {/* Page List Tabs */}
+          {/* { Navigation Button} */}
+          {/* {  Set Fix Height and make the content scrollable } */}
+          <nav className="flex flex-col gap-2 mt-11 overflow-auto">
+            <ol>
+              <li>Dashboard</li>
+              <li>Clients</li>
+              <li>Something</li>
+              <li>Something</li>
+              <li>Something</li>
+              <li>Something</li>
+              <li>Something</li>
+            </ol>
+          </nav>
+
+          <div className="border mt-50">
+            <div>
+              <h1> Something Promo</h1>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Center */}
       {/* { make the screen dynamic later on } */}
@@ -196,7 +221,45 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="flex-[0_0_17%] bg-amber-300 h-full"> </div>
+      <div className="flex-[0_0_17%] bg-amber-300 h-full flex flex-col">
+        <div className="flex-row border flex justify-between p-2">
+          <p>Logout</p>
+          <button>Logout</button>
+        </div>
+        <div className="flex flex-col bg-white p-10 justify-center items-center gap-5">
+          <div className="h-[5rem] w-[5rem] rounded-full bg-black"></div>
+          <div className="flex justify-center items-center flex-col">
+            <div>Hannah Erica</div>
+            <div>Accountant</div>
+          </div>
+          <div className="flex">
+            <button className="bg-blue-400 flex-1 w-[8rem] rounded-3xl">
+              My Profile
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col h-[20rem] mt-10 bg-amber-800 overflow-auto p-2">
+          <div>Recent Activity</div>
+          <div className="p-4">
+            <ol>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+              <li>Transaction Recent</li>
+            </ol>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
