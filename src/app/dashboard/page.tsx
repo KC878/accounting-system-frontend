@@ -13,6 +13,7 @@ import ClickableIcon from "@src/components/ClickableIcon";
 import ClickableText from "@src/components/ClickableText";
 import WelcomeMessage from "@src/ui/WelcomeMessage";
 import StatOverview from "@src/ui/StatOverview";
+import FinancialOverview from "@src/ui/FinancialOverview";
 
 // metadata Left Nav
 
@@ -136,94 +137,8 @@ const Dashboard = () => {
         </div>
 
         {/* Info Board */}
-        <div className="flex-1 bg-gray-400 flex flex-row">
-          <div className="bg-white flex-1 flex flex-col">
-            <div className="bg-gray-300 flex-1 flex flex-col p-2">
-              <div className="border txt-lg lg:txt-4xl sm:txt-2xl">Revenue</div>
-              <div className="flex flex-row p-2 gap-9 justify-center items-center">
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-              </div>
-              <div className="flex flex-row p-2 gap-9 justify-center items-center">
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-white flex-1 flex justify-center items-center">
-              Chart
-            </div>
-          </div>
-
-          <div className="bg-white flex-1 flex flex-col">
-            <div className="bg-red-300 flex-1 flex flex-col p-2">
-              <div className="border txt-lg lg:txt-4xl sm:txt-2xl">
-                Payments
-              </div>
-              <div className="flex flex-row p-2 gap-9 justify-center items-center">
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-              </div>
-              <div className="flex flex-row p-2 gap-9 justify-center items-center">
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-                <div className="border">
-                  <p>$422.69K</p>
-                  <p> Something</p>
-                  <p> Something</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-white flex-1 flex justify-center items-center">
-              Chart
-            </div>
-          </div>
+        <div className="flex-1 flex flex-row gap-5">
+          <FinancialOverview />
         </div>
         <div className="flex-1 bg-white flex flex-row">
           <div className="flex-1 flex flex-col border">
