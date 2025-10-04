@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import { Button } from "@src/components/Button";
 import { logos } from "@src/constants/logos";
 import Image from "next/image";
@@ -11,6 +11,8 @@ import type { LeftNavMetaData } from "@src/types/types";
 import UserAvatar from "@src/components/UserAvatar";
 import ClickableIcon from "@src/components/ClickableIcon";
 import ClickableText from "@src/components/ClickableText";
+import WelcomeMessage from "@src/ui/WelcomeMessage";
+import StatOverview from "@src/ui/StatOverview";
 
 // metadata Left Nav
 
@@ -124,48 +126,13 @@ const Dashboard = () => {
         </div>
 
         {/* 2nd Row  */}
-        <div className="flex-[0.5] bg-gray-400 flex flex-row">
-          <div className="flex-2 flex-col flex justify-center items-center gap-2 bg-red-400">
-            <div className="border"> Welcome back Hannah!</div>
-            <div className="border"> Keep it up and improve your results!</div>
-          </div>
-          <div className="flex-1 flex-col flex justify-center items-center bg-amber-400">
-            <button>Image here</button>
-          </div>
+        <div className="flex-[0.5] bg-[#ddecf0] flex flex-row px-5 rounded-lg">
+          <WelcomeMessage />
         </div>
 
         {/* 3rd Row */}
-        <div className="flex-[0.25] bg-white flex flex-row gap-2 p-1">
-          <div className="flex-1 bg-emerald-300 flex flex-row justify-center items-center rounded-xl">
-            <div className="flex-1 flex-col flex justify-center items-center p-2">
-              <h1 className="border">$422.89K</h1>
-              <p className="border"> 23% Loan Margin </p>
-            </div>
-            <div className="flex-1 flex-col flex justify-center items-center p-2">
-              <p className="border"> Projected </p>
-              <p className="border"> Total Revenue</p>
-            </div>
-          </div>
-          <div className="flex-1 bg-orange-300 flex flex-row justify-center items-center rounded-xl">
-            <div className="flex-1 flex-col flex justify-center items-center p-2">
-              <h1 className="border text-xl lg:text-4xl sm:text-2xl">62%</h1>
-              <p className="border"> ^ % </p>
-            </div>
-            <div className="flex-1 flex-col flex justify-center items-center p-2">
-              <p className="border"> Converrge </p>
-              <p className="border"> Proposal</p>
-              <p className="border"> Something</p>
-            </div>
-          </div>
-          <div className="flex-1 bg-green-900 flex flex-row justify-center items-center rounded-xl">
-            <div className="flex-1 flex-col flex justify-center items-center p-2">
-              <h1 className="border text-xl lg:text-4xl sm:text-2xl">463</h1>
-              <p className="border"> ^ Something </p>
-            </div>
-            <div className="flex-1 flex-col flex justify-center items-center p-2">
-              <p className="border"> Current class </p>
-            </div>
-          </div>
+        <div className="flex-[0.25] bg-white flex flex-row gap-2 p-1 text-[#fafafa]">
+          <StatOverview />
         </div>
 
         {/* Info Board */}

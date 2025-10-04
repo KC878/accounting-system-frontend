@@ -54,3 +54,12 @@ export interface ClickableTextProps {
   functionType: string;
   text: string;
 }
+
+export interface TextProps {
+  text: string;
+  variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "body1" | "body2" | "subtitle1" | "subtitle2";
+  color?: string;
+  sx?: object;
+  align?: "right" | "left" | "center" | "inherit" | "justify" | undefined;
+  className?: string;
+}
