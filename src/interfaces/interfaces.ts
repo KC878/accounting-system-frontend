@@ -35,3 +35,22 @@ export interface AvatarProp {
   badge: React.ReactNode;
   size: number;
 }
+
+
+export interface ClickableIconProps {
+  className?: string,
+  icon: React.ElementType;
+  functionClick: (functionType: string) => void | string;
+  functionType: string;
+  color?: string;
+  fontSize?: number;
+
+}
+
+export interface ClickableTextProps {
+  outerClassName: string;
+  innerClassName: string;
+  functionClick: (functionType: string) => void | string;
+  functionType: string;
+  text: string;
+}

@@ -9,6 +9,8 @@ import { icon } from "@src/constants/icons";
 
 import type { LeftNavMetaData } from "@src/types/types";
 import UserAvatar from "@src/components/UserAvatar";
+import ClickableIcon from "@src/components/ClickableIcon";
+import ClickableText from "@src/components/ClickableText";
 
 // metadata Left Nav
 
@@ -82,15 +84,42 @@ const Dashboard = () => {
 
       {/* Center */}
       {/* { make the screen dynamic later on } */}
-      <div className="flex-1 p-5 flex flex-col h-[150vh] overflow-auto gap-5">
+      <div className="flex-1 px-7 py-4 flex flex-col h-[150vh] overflow-auto gap-5">
         {/* 1st Row */}
-        <div className="mt-4 bg-white flex flex-row p-2 justify-between">
-          <div className="bg-red-400 flex border gap-2 justify-center items-center">
-            <p className="border">Text Here</p>
-            <button className="border">+ </button>
+        <div className="mt-4 bg-white flex flex-row p-3 justify-between rounded-xl">
+          <div className="flex gap-2 justify-center items-center">
+            <Typography
+              variant="caption"
+              color="textDisabled"
+              sx={{
+                fontFamily: "Inter",
+              }}
+            >
+              Keysii Solutions Inc.
+            </Typography>
+
+            <ClickableIcon
+              className={
+                "bg-[#eb5b43] rounded-full flex items-center justify-center h-[2rem] w-[2rem]"
+              }
+              icon={icon.add}
+              functionClick={functionClick}
+              functionType={"add"}
+              color={"white"}
+              fontSize={22}
+            />
           </div>
-          <div className="flex bg-amber-200 border justify-center items-center">
-            <button className="border"> Search </button>
+          <div className="flex bg-amber-200 justify-center items-center">
+            <ClickableIcon
+              className={
+                "bg-[#1b7171] rounded-lg flex items-center justify-center h-[2rem] w-[2rem]"
+              }
+              icon={icon.search}
+              functionClick={functionClick}
+              functionType={"search"}
+              color={"white"}
+              fontSize={20}
+            />
           </div>
         </div>
 
@@ -282,11 +311,11 @@ const Dashboard = () => {
           >
             LOGOUT
           </Typography>
-          <icon.logout
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              functionClick("logout");
-            }}
+
+          <ClickableIcon
+            icon={icon.logout}
+            functionClick={functionClick}
+            functionType={"logout"}
           />
         </div>
         <div className="flex flex-col bg-white p-10 justify-center items-center gap-3">
@@ -325,11 +354,15 @@ const Dashboard = () => {
               Accountant
             </Typography>
           </div>
-          <div className="flex" onClick={() => functionClick("MyProfile")}>
-            <div className="bg-[#337c7d] flex-1 w-[8rem] rounded-sm flex justify-center items-center text-white p-1 cursor-pointer">
-              My Profile
-            </div>
-          </div>
+          <ClickableText
+            innerClassName={"flex"}
+            outerClassName={
+              "bg-[#337c7d] flex-1 w-[8rem] rounded-sm flex justify-center items-center text-white p-1 cursor-pointer"
+            }
+            functionClick={functionClick}
+            functionType={"myProfile"}
+            text={"My Profile"}
+          />
         </div>
         <div className="flex flex-col h-[20rem] mt-10 overflow-auto p-2">
           <div>Recent Activity</div>

@@ -17,6 +17,10 @@ import HelpIcon from "@mui/icons-material/Help";
 // Right Nav-Button
 import LogoutIcon from "@mui/icons-material/Logout";
 
+// Center Items Dashboard
+import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from "@mui/icons-material/Search";
+
 export const icon = {
   username: LockPersonIcon,
   password: LockIcon,
@@ -35,4 +39,6 @@ export const icon = {
 
   // right
   logout: LogoutIcon,
+  add: AddIcon,
+  search: SearchIcon,
 };
