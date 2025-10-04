@@ -131,7 +131,7 @@ const Dashboard = () => {
         </div>
 
         {/* 3rd Row */}
-        <div className="flex-[0.25] bg-white flex flex-row gap-2 p-1 text-[#fafafa]">
+        <div className="flex-[0.25] flex flex-row gap-2 p-1 text-[#fafafa]">
           <StatOverview />
         </div>
 
