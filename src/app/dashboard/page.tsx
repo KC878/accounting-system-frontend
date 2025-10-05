@@ -11,9 +11,9 @@ import type { LeftNavMetaData } from "@src/types/types";
 import UserAvatar from "@src/components/UserAvatar";
 import ClickableIcon from "@src/components/ClickableIcon";
 import ClickableText from "@src/components/ClickableText";
-import WelcomeMessage from "@src/ui/WelcomeMessage";
-import StatOverview from "@src/ui/StatOverview";
-import FinancialOverview from "@src/ui/FinancialOverview";
+import WelcomeMessage from "@src/ui/Dashboard/WelcomeMessage";
+import StatOverview from "@src/ui/Dashboard/StatOverview";
+import FinancialOverview from "@src/ui/Dashboard/FinancialOverview";
 import BasicList from "@src/components/BasicList";
 import Text from "@src/components/Text";
 

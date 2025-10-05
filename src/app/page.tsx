@@ -1,6 +1,6 @@
 "use client";
-import Signup from "@src/ui/Signup";
-import Login from "@src/ui/Login";
+import Signup from "@src/ui/Home/Signup";
+import Login from "@src/ui/Home/Login";
 import { useState } from "react";
 
 const Home = () => {
