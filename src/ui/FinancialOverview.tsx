@@ -1,6 +1,7 @@
 import Text from "@src/components/Text";
 import React from "react";
 import { metadata } from "@src/metadata/FinancialOverview";
+import Chart from "./Chart";
 const FinancialOverview = () => {
   const defaultStyle = "flex flex-col p-2";
 
@@ -27,8 +28,11 @@ const FinancialOverview = () => {
     <>
       {/* ts-ignore */}
       {header.map((text, idx) => (
-        <div key={idx} className="bg-white flex-1 flex flex-col rounded-xl">
-          <div className="flex-1 flex flex-col">
+        <div key={idx} className="flex-1 flex flex-col rounded-xl ">
+          <div className="flex-1 flex justify-center items-center rounded-xl p-3">
+            <Chart />
+          </div>
+          <div className="bg-white flex-1 flex flex-col rounded-xl m-2.5">
             <div className="p-3">
               <Text
                 text={text}
@@ -53,9 +57,6 @@ const FinancialOverview = () => {
                 ))}
               </div>
             ))}
-          </div>
-          <div className="bg-white flex-1 flex justify-center items-center rounded-xl">
-            Chart
           </div>
         </div>
       ))}

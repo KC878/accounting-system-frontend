@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Button } from "@src/components/Button";
 import { logos } from "@src/constants/logos";
 import Image from "next/image";
@@ -14,6 +14,8 @@ import ClickableText from "@src/components/ClickableText";
 import WelcomeMessage from "@src/ui/WelcomeMessage";
 import StatOverview from "@src/ui/StatOverview";
 import FinancialOverview from "@src/ui/FinancialOverview";
+import BasicList from "@src/components/BasicList";
+import Text from "@src/components/Text";
 
 // metadata Left Nav
 
@@ -76,12 +78,6 @@ const Dashboard = () => {
               setPage={setPage}
             />
           </nav>
-
-          <div className="border mt-50">
-            <div>
-              <h1> Something Promo</h1>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -139,45 +135,6 @@ const Dashboard = () => {
         {/* Info Board */}
         <div className="flex-1 flex flex-row gap-5">
           <FinancialOverview />
-        </div>
-        <div className="flex-1 bg-white flex flex-row">
-          <div className="flex-1 flex flex-col border">
-            <div className="flex-1 border">Pipeline</div>
-            <div className="flex-2 border">Donut Chart</div>
-            <div className="flex-1 flex flex-col">
-              <div className="flex flex-row">
-                <div className="w-5 h-5 flex border rounded-full bg-green-300"></div>
-                <div className="flex-1"> Leads</div>
-              </div>
-              <div className="flex flex-row">
-                <div className="w-5 h-5 flex border rounded-full bg-green-300"></div>
-                <div> Proposals</div>
-              </div>
-              <div className="flex flex-row">
-                <div className="w-5 h-5 flex border rounded-full bg-green-300"></div>
-                <div> Negotaions</div>
-              </div>
-              <div className="flex flex-row">
-                <div className="w-5 h-5 flex border rounded-full bg-green-300"></div>
-                <div> Closed</div>
-              </div>
-            </div>
-          </div>
-          <div className="flex-1 flex flex-col border">
-            <div className="flex-2 flex flex-col bg-gray-400">
-              <div> Clients </div>
-              <div className="flex flex-row gap-2">
-                <p>Client</p>
-                <p>Status</p>
-                <p>Revenue</p>
-                <p>Outstanding</p>
-              </div>
-            </div>
-            <div className="flex-1 bg-amber-400 flex flex-col">
-              <div className="flex-1">Clients</div>
-              <div className="flex-1">F Now</div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -246,25 +203,19 @@ const Dashboard = () => {
             text={"My Profile"}
           />
         </div>
-        <div className="flex flex-col h-[20rem] mt-10 overflow-auto p-2">
-          <div>Recent Activity</div>
-          <div className="p-4">
-            <ol>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-              <li>Transaction Recent</li>
-            </ol>
+        <div className="flex flex-col h-[20rem] mt-10 p-2">
+          <Text
+            text={"Recent Activity"}
+            sx={{ fontSize: "1.1rem", fontWeight: 400, color: "#1a1a1a" }}
+          />
+          <div
+            className={`p-1  mt-3 overflow-auto`}
+            style={{
+              scrollbarWidth: "thin",
+              scrollbarColor: "rgba(0,0,0,0.2) transparent",
+            }}
+          >
+            <BasicList />
           </div>
         </div>
       </div>
