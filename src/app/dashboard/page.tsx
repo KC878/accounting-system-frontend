@@ -46,7 +46,7 @@ const Dashboard = () => {
     alert(func);
   };
   return (
-    <div className="flex flex-row h-[127vh] bg-[#f6f5fd]">
+    <div className="flex flex-row h-screen bg-[#f6f5fd]">
       <div className="flex-[0_0_17%] bg-[#ffffff] h-full p-5 flex flex-col">
         <div className="flex-1 flex flex-col gap-2">
           <div className="flex flex-row items-center justify-center w-[10vw] h-[auto] gap-2 cursor-pointer">
@@ -83,7 +83,7 @@ const Dashboard = () => {
 
       {/* Center */}
       {/* { make the screen dynamic later on } */}
-      <div className="flex-1 px-7 py-4 flex flex-col h-[127vh] overflow-auto gap-5">
+      <div className="flex-1 px-7 py-4 flex flex-col h-screen overflow-auto gap-5">
         {/* 1st Row */}
         <div className="mt-4 bg-white flex flex-row p-3 justify-between rounded-xl">
           <div className="flex gap-2 justify-center items-center">
@@ -133,7 +133,7 @@ const Dashboard = () => {
         </div>
 
         {/* Info Board */}
-        <div className="flex-1 flex flex-row gap-5">
+        <div className="flex-1 flex flex-row">
           <FinancialOverview />
         </div>
       </div>

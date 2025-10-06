@@ -19,8 +19,8 @@ const FinancialOverview = () => {
 
   // just a way to looop through
   const outerStyle = [
-    "flex flex-row p-2 gap-2 justify-center items-center",
-    "flex flex-row p-2 gap-2 justify-center items-center",
+    "flex flex-row justify-center items-center",
+    "flex flex-row justify-center items-center",
   ];
 
   const header = ["Revenue", "Payments"];
@@ -29,7 +29,7 @@ const FinancialOverview = () => {
       {/* ts-ignore */}
       {header.map((text, idx) => (
         <div key={idx} className="flex-1 flex flex-col rounded-xl ">
-          <div className="flex-1 flex justify-center items-center rounded-xl p-3">
+          <div className="flex-1 flex justify-center items-center rounded-xl p-3 ">
             <Chart />
           </div>
           <div className="bg-white flex-1 flex flex-col rounded-xl m-2.5">

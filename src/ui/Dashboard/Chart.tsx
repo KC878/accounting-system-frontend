@@ -26,6 +26,7 @@ const Chart = () => {
           borderRadius: 4,
           boxShadow: 4,
           background: "linear-gradient(145deg, #ffffff, #f0f0f0)",
+          width: "100%",
         }}
       >
         <CardContent>
