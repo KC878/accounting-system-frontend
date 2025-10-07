@@ -12,9 +12,8 @@ export const registerUser = async (data: UserType) => {
 
 // Login User
 export const loginUser = async (data: UserType) => {
-  const response = await apiClient.post(process.env.NEXT_PUBLIC_API_USER_LOGIN!, data, {
-    withCredentials: true, 
-  });
+  const response = await apiClient.post(process.env.NEXT_PUBLIC_API_USER_LOGIN!, data);
 
   return response;
+  
 }

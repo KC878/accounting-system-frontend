@@ -83,7 +83,13 @@ const Dashboard = () => {
 
       {/* Center */}
       {/* { make the screen dynamic later on } */}
-      <div className="flex-1 px-7 py-4 flex flex-col h-screen overflow-auto gap-5">
+      <div
+        className="flex-1 px-7 py-4 flex flex-col h-screen overflow-auto gap-5"
+        style={{
+          scrollbarWidth: "thin",
+          scrollbarColor: "rgba(0,0,0,0.2) transparent",
+        }}
+      >
         {/* 1st Row */}
         <div className="mt-4 bg-white flex flex-row p-3 justify-between rounded-xl">
           <div className="flex gap-2 justify-center items-center">

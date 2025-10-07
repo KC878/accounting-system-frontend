@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:https": "next dev --experimental-https --experimental-https-key /home/keysii/certs/localhost.key --experimental-https-cert /home/keysii/certs/localhost.crt",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"

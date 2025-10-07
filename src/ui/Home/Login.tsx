@@ -11,7 +11,14 @@ import { icon } from "@src/constants/icons";
 import { loginUser } from "@src/services/userService";
 import { AxiosError } from "axios";
 import Notification from "@src/components/Notification";
+import { useNavigate } from "@src/lib/navigate";
+import { useRouter } from "next/navigation";
+
 const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
+  // navigation
+  // const { login } = useNavigate();
+  const router = useRouter();
+
   const [formData, setFormData] = useState<UserType>({
     username: "",
     password: "",
@@ -61,6 +68,18 @@ const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
           password: "",
         });
         setFormError({});
+
+        // after every checks run the login redirect function
+        // login()
+        // console.log("SessionId: ", result.data.sessionid);
+
+        // this is for development only
+        const sessionid = result.data.sessionid; // store session id from auth user to variable
+
+        // store in cookie manually (so middleware can read it )
+        document.cookie = `sessionid=${sessionid}; path=/; samesite=none; secure`;
+
+        window.location.href= "/dashboard"; 
       }
     } catch (err) {
       const axiosErr = err as AxiosError<any>;
@@ -84,7 +103,7 @@ const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
           });
         }
       } else {
-        console.error("Registration Error: ", axiosErr.message);
+        console.error("Login Error: ", axiosErr.message);
       }
     }
   };
