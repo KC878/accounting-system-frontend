@@ -2,13 +2,16 @@ import Text from "@src/components/Text";
 import React from "react";
 import { images } from "@src/constants/images";
 import Image from "next/image";
-
+import { getLocalStorageUser } from "@src/utils/utils";
 const WelcomeMessage = () => {
+  const first_name = getLocalStorageUser()?.first_name;
+  const last_name = getLocalStorageUser()?.last_name;
+
   return (
     <>
       <div className="flex-2 flex-col flex justify-center gap-1">
         <Text
-          text={"Welcome back Hannah!"}
+          text={`Welcome back ${first_name + ' ' + last_name}!`}
           variant="h4"
           color={"#cd9e92"}
           sx={{ fontWeight: 600, fontFamily: "Montserrat" }}

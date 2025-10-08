@@ -1,4 +1,6 @@
 
+import type { DashboardData } from "@src/types/types";
+
 export const formatName = (name: string) => {
   console.log("FormatName Counter");
 
@@ -52,3 +54,21 @@ export const deleteAllCookies = (): void => {
       document.cookie = `${cookieName}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=none; secure`;
   });
 };
+
+
+// create custom type 
+
+export const setLocalStorage = (user: DashboardData): void => {
+  localStorage.setItem("user", JSON.stringify(user));
+}
+
+export const getLocalStorageUser = (): DashboardData | null => {
+
+  if (typeof window === "undefined") {
+    // This means we’re on the server → no localStorage
+    return null;
+  }
+
+  const storedUser = localStorage.getItem("user");
+  return storedUser ? JSON.parse(storedUser) : null;
+}

@@ -19,11 +19,19 @@ import Text from "@src/components/Text";
 
 import { logoutUser } from "@src/services/userService";
 import { AxiosError } from "axios";
-import { getCookie, deleteAllCookies } from "@src/utils/utils";
+import {
+  getCookie,
+  deleteAllCookies,
+  getLocalStorageUser,
+} from "@src/utils/utils";
 // metadata Left Nav
 
 const Dashboard = () => {
   const [page, setPage] = useState("");
+
+  const name =
+    getLocalStorageUser()?.first_name + " " + getLocalStorageUser()?.last_name;
+  const role = getLocalStorageUser()?.role;
 
   // wait and see if there is a use for this
   const [functionButton, setFunctionButton] = useState("");
@@ -61,7 +69,6 @@ const Dashboard = () => {
       }
     } catch (err) {
       const axiosErr = err as AxiosError<any>;
-
       console.error("Logout error: ", axiosErr);
     }
   };
@@ -205,7 +212,7 @@ const Dashboard = () => {
                 letterSpacing: 0.01,
               }}
             >
-              Hannah Erica
+              {name}
             </Typography>
             <Typography
               key={"name1"}
@@ -216,7 +223,7 @@ const Dashboard = () => {
                 fontSize: "1rem",
               }}
             >
-              Accountant
+              {role}
             </Typography>
           </div>
           <ClickableText

@@ -76,7 +76,7 @@ const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
         // this is for development only
         const sessionid = result.data.sessionid; // store session id from auth user to variable
         const csrftoken = result.data.csrftoken;
-        
+
         // store in cookie manually (so middleware can read it )
         setCookie("sessionid", sessionid);
         setCookie("csrftoken", csrftoken);

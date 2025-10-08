@@ -1,4 +1,5 @@
 import apiClient from "@src/services/apiClient"
+import { setLocalStorage } from "@src/utils/utils"
 
 import type { UserType } from "@src/types/types"
 
@@ -6,6 +7,7 @@ import type { UserType } from "@src/types/types"
 export const registerUser = async (data: UserType) => {
   const response = await apiClient.post(process.env.NEXT_PUBLIC_API_USER_REGISTER!, data);
 
+  
   return response;
 };
 
@@ -13,6 +15,12 @@ export const registerUser = async (data: UserType) => {
 // Login User
 export const loginUser = async (data: UserType) => {
   const response = await apiClient.post(process.env.NEXT_PUBLIC_API_USER_LOGIN!, data);
+
+
+  setLocalStorage(response.data.user);
+  console.log(localStorage.getItem("user"));
+
+
 
   return response;
   
@@ -25,6 +33,7 @@ export const logoutUser = async(csrftoken: string) => {
       "X-CSRFToken": csrftoken,
     },
   });
+
 
   return response;
 }

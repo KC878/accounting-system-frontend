@@ -39,3 +39,8 @@ export type LeftNavMetaData = {
   icon: React.ElementType;
 }
 
+export type DashboardData = {
+  first_name: string;
+  last_name: string;
+  role: string;
+}
