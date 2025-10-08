@@ -40,7 +40,7 @@ export interface AvatarProp {
 export interface ClickableIconProps {
   className?: string,
   icon: React.ElementType;
-  functionClick: (functionType: string) => void | string;
+  functionClick: (functionType: string) => Promise<void> | void | string;
   functionType: string;
   color?: string;
   fontSize?: number;
@@ -50,7 +50,7 @@ export interface ClickableIconProps {
 export interface ClickableTextProps {
   outerClassName: string;
   innerClassName: string;
-  functionClick: (functionType: string) => void | string;
+  functionClick: (functionType: string) => Promise<void> | void | string;
   functionType: string;
   text: string;
 }

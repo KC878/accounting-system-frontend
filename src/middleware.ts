@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from 'next/server';
 
 export const middleware = (req: NextRequest) => {
-  const session = req.cookies.get('sessionid')
+  const session = req.cookies.get('sessionid');
   // const token = req.cookies.get('csrftoken')
 
   
