@@ -18,3 +18,15 @@ export const loginUser = async (data: UserType) => {
 
   return response;
 }
+
+// Logout User
+export const logoutUser = async(csrftoken: string) => {
+  const response = await apiClient.post(process.env.NEXT_PUBLIC_API_USER_LOGOUT!, {}, {
+    withCredentials: true,
+    headers: {
+      "X-CSRFToken": csrftoken,
+    },
+  })
+
+  return response;
+}

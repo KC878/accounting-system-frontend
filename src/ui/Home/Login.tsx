@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import Form from "@src/components/Form";
 import {
@@ -7,11 +9,19 @@ import {
   UserType,
 } from "@src/types/types";
 
+// navigation
+import { useRouter } from "next/navigation";
+
 import { icon } from "@src/constants/icons";
 import { loginUser } from "@src/services/userService";
 import { AxiosError } from "axios";
 import Notification from "@src/components/Notification";
+import { setCookie } from "@src/utils/utils";
+
 const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
+  // navigation
+  const router = useRouter();
+
   const [formData, setFormData] = useState<UserType>({
     username: "",
     password: "",
@@ -61,6 +71,17 @@ const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
           password: "",
         });
         setFormError({});
+
+        // this for development only
+        const sessionid = result.data.sessionid;
+        const csrftoken = result.data.csrftoken;
+
+        // store cookie manually (-> communicate with middleware)
+        setCookie("sessionid", sessionid);
+        setCookie("csrftoken", csrftoken);
+
+        // activate routing here
+        router.push("/dashboard");
       }
     } catch (err) {
       const axiosErr = err as AxiosError<any>;

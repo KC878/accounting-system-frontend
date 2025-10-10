@@ -25,3 +25,32 @@ export const debounce = <T extends (...args: any[]) => void>(
   // Need for: 
     // formatName
     // debounce
+
+
+export const setCookie = (key: string, value: string): void =>{
+document.cookie = `${key}=${value}; path=/; samesite=none; secure`;
+}
+
+export const getCookie = (key: string): string | null => {
+const cookies = document.cookie.split(';'); // split all cookies
+for (let cookie of cookies) {
+  const [k, v] = cookie.trim().split('=');
+  if (k === key) return decodeURIComponent(v);
+}
+return null; // if not found
+};
+
+export const deleteAllCookies = (): void => {
+// Get all cookies as a single string
+const cookies = document.cookie.split(';');
+
+// Iterate through each cookie
+cookies.forEach((cookie) => {
+    // Extract the cookie name
+    const cookieName = cookie.split('=')[0].trim();
+
+    // Overwrite the cookie with an empty value and set it to expire in the past
+    document.cookie = `${cookieName}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=none; secure`;
+});
+};
+    

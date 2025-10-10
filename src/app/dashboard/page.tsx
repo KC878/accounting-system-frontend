@@ -17,9 +17,15 @@ import FinancialOverview from "@src/ui/Dashboard/FinancialOverview";
 import BasicList from "@src/components/BasicList";
 import Text from "@src/components/Text";
 
+import { AxiosError } from "axios";
+import { deleteAllCookies, getCookie } from "@src/utils/utils";
+import { logoutUser } from "@src/services/userService";
+import { useRouter } from "next/navigation";
 // metadata Left Nav
 
 const Dashboard = () => {
+  // navigate
+  const router = useRouter();
   const [page, setPage] = useState("");
 
   // wait and see if there is a use for this
@@ -42,8 +48,25 @@ const Dashboard = () => {
   };
 
   // to be used in this page only
-  const functionClick = (func: string) => {
+  const functionClick = async (func: string) => {
     alert(func);
+    try {
+      if (func === "logout") {
+        const csrftoken = getCookie("csrftoken")!;
+
+        const result = await logoutUser(csrftoken);
+
+        if (result.data.message === "Logged out successfully") {
+          // delete all cookies
+          deleteAllCookies();
+
+          router.push("/");
+        }
+      }
+    } catch (err) {
+      const axiosErr = err as AxiosError<any>;
+      console.error("Logout error: ", axiosErr);
+    }
   };
   return (
     <div className="flex flex-row h-screen bg-[#f6f5fd]">
