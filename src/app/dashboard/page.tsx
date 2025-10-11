@@ -55,7 +55,6 @@ const Dashboard = () => {
         const csrftoken = getCookie("csrftoken")!;
 
         const result = await logoutUser(csrftoken);
-
         if (result.data.message === "Logged out successfully") {
           // delete all cookies
           deleteAllCookies();

@@ -57,19 +57,50 @@ const Form: React.FC<FormProp> = ({
               </div>
 
               <div className="flex-1">
-                <FieldType
-                  key={index}
-                  label={item.label}
-                  name={item.name}
-                  type={item.type}
-                  value={formData[item.name as keyof UserType] ?? ""}
-                  onChange={handleChange}
-                  fullWidth
-                  margin="normal"
-                  required
-                  error={item.error ?? false} // false by default
-                  helperText={item.helperText ?? ""}
-                />
+                {(() => {
+                  switch (FieldType) {
+                    case TextField:
+                      return (
+                        <FieldType
+                          key={index}
+                          label={item.label}
+                          name={item.name}
+                          type={item.type}
+                          value={formData[item.name as keyof UserType] ?? ""}
+                          onChange={handleChange}
+                          fullWidth
+                          margin="normal"
+                          required
+                          error={item.error ?? false}
+                          helperText={item.helperText ?? ""}
+                        />
+                      );
+                    case Select:
+                      return (
+                        <FormControl
+                          fullWidth
+                          margin="normal"
+                          required
+                          key={index}
+                        >
+                          <InputLabel>{item.label}</InputLabel>
+                          <Select
+                            name={item.name}
+                            value={formData[item.name as keyof UserType] ?? ""}
+                            onChange={handleChange}
+                          >
+                            {item.options?.map((option: any) => (
+                              <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      );
+                    default:
+                      return null;
+                  }
+                })()}
               </div>
             </div>
           );

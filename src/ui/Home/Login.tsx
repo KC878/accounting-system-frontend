@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import Form from "@src/components/Form";
 import {
   HomeModeType,
@@ -22,8 +22,11 @@ import { DashboardType } from "@src/types/dashboardTypes";
 
 const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
   // state managers
-  const { dashboardState, loading, setDashboardState, setLoading } =
-    useDashboard();
+  const { setDashboardState } = useDashboard();
+
+  // local loading
+  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   // navigation
   const router = useRouter();
@@ -88,12 +91,16 @@ const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
         setCookie("csrftoken", csrftoken);
 
         const user: DashboardType = result.data.user;
+
         setTimeout(() => {
           setDashboardState(user);
+          setLoading(false);
         }, 2000);
 
-        // activate routing here
-        router.push("/dashboard");
+        startTransition(() => {
+          // activate routing here
+          router.push("/dashboard");
+        });
       }
     } catch (err) {
       const axiosErr = err as AxiosError<any>;

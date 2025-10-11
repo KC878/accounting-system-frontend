@@ -7,6 +7,9 @@ import { registerUser } from "@src/services/userService";
 import { AxiosError } from "axios";
 import { icon } from "@src/constants/icons";
 
+// onChange typing
+import { SelectChangeEvent } from "@mui/material/Select";
+
 const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
   const [formData, setFormData] = useState<UserType>({
     username: "",
@@ -14,13 +17,17 @@ const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
     email: "",
     first_name: "",
     last_name: "",
+    sex: "",
   });
 
   // only store relevant keyfield with errors from UserType
   const [formError, setFormError] = useState<Partial<UserType>>({});
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | any
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | SelectChangeEvent<string>
+      | any
   ) => {
     const { name, value } = e.target;
 
@@ -87,6 +94,7 @@ const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
           email: "",
           first_name: "",
           last_name: "",
+          sex: "",
         });
         setFormError({});
       }
@@ -151,6 +159,16 @@ const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
       type: "text",
       inputRule: { allowOnly: "letters" },
       icon: icon.name,
+    },
+    {
+      fieldOption: 1,
+      label: "Sex",
+      name: "sex",
+      icon: icon.sex,
+      options: [
+        { label: "Male", value: "male" },
+        { label: "Female", value: "female" },
+      ],
     },
   ];
 

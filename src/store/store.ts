@@ -11,8 +11,9 @@ export const useDashboard = create<DashboardState>()(
         first_name: '',
         last_name: '',
         role: '',
+        sex: '',
       },
-      
+
       loading: false,
       error: null,
 

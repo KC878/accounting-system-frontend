@@ -21,6 +21,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 
+// gender
+import WcIcon from "@mui/icons-material/Wc";
+
 export const icon = {
   username: LockPersonIcon,
   password: LockIcon,
@@ -41,4 +44,5 @@ export const icon = {
   logout: LogoutIcon,
   add: AddIcon,
   search: SearchIcon,
+  sex: WcIcon,
 };

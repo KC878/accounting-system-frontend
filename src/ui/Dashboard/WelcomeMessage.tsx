@@ -6,21 +6,19 @@ import { images } from "@src/constants/images";
 import Image from "next/image";
 import { useDashboard } from "@src/store/store";
 const WelcomeMessage = () => {
-  // const { loading, dashboardState, setLoading } = useDashboard();
-  // const [name, setName] = useState("");
+  const { loading, dashboardState, setLoading } = useDashboard();
+  const [sex, setSex] = useState("");
 
-  // useEffect(() => {
-  //   setLoading(true);
+  useEffect(() => {
+    setLoading(true);
 
-  //   const timer = setTimeout(() => {
-  //     setName(dashboardState.username);
-  //     console.log(name);
-  //     console.log(name);
-  //     setLoading(false);
-  //   }, 2000);
+    const timer = setTimeout(() => {
+      setSex(dashboardState.sex);
+      setLoading(false);
+    }, 2000);
 
-  //   return () => clearTimeout(timer);
-  // }, [loading]); ==> comment  I may need this for the gender, nor any other data 
+    return () => clearTimeout(timer);
+  }, [loading]); // ==> comment  I may need this for the gender, nor any other data
 
   return (
     <>
@@ -50,7 +48,7 @@ const WelcomeMessage = () => {
       </div>
       <div className="flex-1 flex-col flex justify-center items-center">
         <Image
-          src={images.female}
+          src={sex === "male" ? images.male : images.female}
           alt="keysiiLogo"
           style={{
             objectFit: "contain",

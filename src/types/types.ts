@@ -1,5 +1,7 @@
 import { SvgIconProps } from "@mui/material/SvgIcon";
 
+
+
 //  Form 
 export type UserType = {
   username: string;
@@ -7,19 +9,23 @@ export type UserType = {
   email?: string;
   first_name?: string;
   last_name?: string;
+  sex?: string;
 };
 
 export type InputFieldType = {
   fieldOption: number;
   label: string;
   name: string;
-  type: string;
+  type?: string;
   error?: boolean;
   helperText?: string;
   inputRule?: {
     allowOnly?: "letters" | "numbers" | "lettersNumbers";
   };
   icon: React.ComponentType<SvgIconProps>;
+
+  // for select
+  options?: {label?: string, value?: string}[],
 };
 
 export type HomeModeType = {

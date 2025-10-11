@@ -2,12 +2,14 @@ import type { UserType, InputFieldType, HomeModeType, LeftNavMetaData } from "@s
 import { SvgIconProps } from "@mui/material/SvgIcon";
 import React from "react";
 
+import { SelectChangeEvent } from "@mui/material/Select";
+
 export interface FormProp {
   formHeaderTitle: string;
   formData: UserType;
   setFormData?: React.Dispatch<React.SetStateAction<UserType>>;
   handleChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>
   ) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   input: InputFieldType[];
