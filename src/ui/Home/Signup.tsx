@@ -1,7 +1,7 @@
 "use client";
 
 import Form from "@src/components/Form";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { UserType, InputFieldType, HomeModeType } from "@src/types/types";
 import { registerUser } from "@src/services/userService";
 import { AxiosError } from "axios";
@@ -9,6 +9,7 @@ import { icon } from "@src/constants/icons";
 
 // onChange typing
 import { SelectChangeEvent } from "@mui/material/Select";
+import { useRouter } from "next/navigation";
 
 const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
   const [formData, setFormData] = useState<UserType>({
@@ -19,6 +20,8 @@ const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
     last_name: "",
     sex: "",
   });
+
+  const router = useRouter();
 
   // only store relevant keyfield with errors from UserType
   const [formError, setFormError] = useState<Partial<UserType>>({});
@@ -87,7 +90,6 @@ const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
       console.log("Status: ", result.status);
       // reset form only on success
       if (result && result.status === 201) {
-        alert("Success");
         setFormData({
           username: "",
           password: "",
@@ -97,6 +99,8 @@ const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
           sex: "",
         });
         setFormError({});
+
+        window.location.reload(); // just reload the entire page --> it will automatically set to login ui by default
       }
     } catch (err) {
       const axiosErr = err as AxiosError<any>;
