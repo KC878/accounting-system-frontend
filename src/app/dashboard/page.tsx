@@ -23,11 +23,18 @@ import { logoutUser } from "@src/services/userService";
 import { useRouter } from "next/navigation";
 // metadata Left Nav
 
+import { useDashboard } from "@src/store/store";
+
 const Dashboard = () => {
   // navigate
   const router = useRouter();
   const [page, setPage] = useState("");
 
+  const { dashboardState } = useDashboard();
+
+  const role =
+    dashboardState.role.charAt(0).toUpperCase() + dashboardState.role.slice(1);
+  const name = dashboardState.first_name;
   // wait and see if there is a use for this
   const [functionButton, setFunctionButton] = useState("");
 
@@ -106,7 +113,13 @@ const Dashboard = () => {
 
       {/* Center */}
       {/* { make the screen dynamic later on } */}
-      <div className="flex-1 px-7 py-4 flex flex-col h-screen overflow-auto gap-5">
+      <div
+        className="flex-1 px-7 py-4 flex flex-col h-screen overflow-auto gap-5"
+        style={{
+          scrollbarWidth: "thin",
+          scrollbarColor: "rgba(0,0,0,0.2) transparent",
+        }}
+      >
         {/* 1st Row */}
         <div className="mt-4 bg-white flex flex-row p-3 justify-between rounded-xl">
           <div className="flex gap-2 justify-center items-center">
@@ -198,11 +211,11 @@ const Dashboard = () => {
                 fontFamily:
                   "'Montserrat', 'Open Sans', 'Helvetica', 'Arial', sans-serif",
                 fontWeight: 700,
-                fontSize: 17,
+                fontSize: 11,
                 letterSpacing: 0.01,
               }}
             >
-              Hannah Erica
+              {name}
             </Typography>
             <Typography
               key={"name1"}
@@ -210,10 +223,10 @@ const Dashboard = () => {
                 fontFamily:
                   "'Montserrat', 'Open Sans', 'Helvetica', 'Arial', sans-serif",
                 fontWeight: 400,
-                fontSize: "1rem",
+                fontSize: 10,
               }}
             >
-              Accountant
+              {role}
             </Typography>
           </div>
           <ClickableText
@@ -226,7 +239,7 @@ const Dashboard = () => {
             text={"My Profile"}
           />
         </div>
-        <div className="flex flex-col h-[20rem] mt-10 p-2">
+        <div className="flex flex-col h-[20rem]  p-2">
           <Text
             text={"Recent Activity"}
             sx={{ fontSize: "1.1rem", fontWeight: 400, color: "#1a1a1a" }}
