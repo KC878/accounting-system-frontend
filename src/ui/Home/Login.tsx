@@ -17,8 +17,14 @@ import { loginUser } from "@src/services/userService";
 import { AxiosError } from "axios";
 import Notification from "@src/components/Notification";
 import { setCookie } from "@src/utils/utils";
+import { useDashboard } from "@src/store/store";
+import { DashboardType } from "@src/types/dashboardTypes";
 
 const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
+  // state managers
+  const { dashboardState, loading, setDashboardState, setLoading } =
+    useDashboard();
+
   // navigation
   const router = useRouter();
 
@@ -54,6 +60,7 @@ const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
     // prevent restart
     e.preventDefault();
     try {
+      setLoading(true);
       // call axios service loginUser
       const result = await loginUser(formData);
 
@@ -80,6 +87,11 @@ const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
         setCookie("sessionid", sessionid);
         setCookie("csrftoken", csrftoken);
 
+        const user: DashboardType = result.data.user;
+        setTimeout(() => {
+          setDashboardState(user);
+        }, 2000);
+
         // activate routing here
         router.push("/dashboard");
       }
@@ -87,6 +99,9 @@ const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
       const axiosErr = err as AxiosError<any>;
 
       if (axiosErr.response) {
+        // IF ERROR
+        setLoading(false);
+
         console.error("Status: ", axiosErr.response.status);
         console.error("Error data: ", axiosErr.response.data);
         console.log("Try Error: ", formError);
@@ -107,6 +122,8 @@ const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
       } else {
         console.error("Registration Error: ", axiosErr.message);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -145,7 +162,7 @@ const Login: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         input={input}
-        buttonSubmitName={"Login"}
+        buttonSubmitName={loading ? "Loading" : "Login"}
         homeMode={{
           homeUI,
           setHomeUI,

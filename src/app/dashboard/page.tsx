@@ -59,6 +59,7 @@ const Dashboard = () => {
         if (result.data.message === "Logged out successfully") {
           // delete all cookies
           deleteAllCookies();
+          localStorage.clear(); // removes all keys in localStorage
 
           router.push("/");
         }
