@@ -5,21 +5,17 @@ import React, { useEffect, useState } from "react";
 import { images } from "@src/constants/images";
 import Image from "next/image";
 import { useDashboard } from "@src/store/store";
+import { Sex } from "@src/types/types";
 const WelcomeMessage = () => {
-  const { loading, dashboardState, setLoading } = useDashboard();
-  const [sex, setSex] = useState("");
+  const { dashboardState } = useDashboard();
 
-  useEffect(() => {
-    setLoading(true);
+  let sex: string | undefined;
 
-    const timer = setTimeout(() => {
-      setSex(dashboardState.sex);
-      setLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [loading]); // ==> comment  I may need this for the gender, nor any other data
-
+  if (dashboardState.sex === "male") {
+    sex = images.male.src;
+  } else if (dashboardState.sex === "female") {
+    sex = images.female.src;
+  }
   return (
     <>
       <div className="flex-2 flex-col flex justify-center gap-1">
@@ -47,14 +43,18 @@ const WelcomeMessage = () => {
         />
       </div>
       <div className="flex-1 flex-col flex justify-center items-center">
-        <Image
-          src={sex === "male" ? images.male : images.female}
-          alt="keysiiLogo"
-          style={{
-            objectFit: "contain",
-            borderRadius: "50%",
-          }}
-        />
+        {sex && (
+          <Image
+            src={sex}
+            alt="keysiiLogo"
+            width={200}
+            height={200}
+            style={{
+              objectFit: "contain",
+              borderRadius: "50%",
+            }}
+          />
+        )}
       </div>
     </>
   );

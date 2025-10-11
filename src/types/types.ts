@@ -45,3 +45,5 @@ export type LeftNavMetaData = {
   icon: React.ElementType;
 }
 
+
+export type Sex = "male" | "female";
