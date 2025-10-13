@@ -14,7 +14,7 @@ import ClickableText from "@src/components/ClickableText";
 import WelcomeMessage from "@src/ui/Dashboard/WelcomeMessage";
 import StatOverview from "@src/ui/Dashboard/StatOverview";
 import FinancialOverview from "@src/ui/Dashboard/FinancialOverview";
-import TransactionForm from "@src/ui/Dashboard/TransactionForm";
+import TransactionForm from "@src/ui/Dashboard/TransactionForm/__index";
 import BasicList from "@src/components/BasicList";
 import Text from "@src/components/Text";
 
