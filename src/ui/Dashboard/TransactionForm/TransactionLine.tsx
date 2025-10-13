@@ -3,7 +3,7 @@ import React from "react";
 import Text from "@src/components/Text";
 
 import TextField from "@mui/material/TextField";
-import { FormControl, Select, MenuItem } from "@mui/material";
+import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 // create logic to bind data for each of the declared data
 // if for example two more transaction Lines
 const TransactionLine = () => {
@@ -12,12 +12,46 @@ const TransactionLine = () => {
       {/* Example if adding another */}
       <div className="flex flex-col">
         <div className="flex flex-col my-2">
-          <Text
-            text={"Transaction Lines"}
-            sx={{
-              fontSize: "1.1rem",
-              fontWeight: "bold",
-              color: "#1a1a1a",
+          <div className="flex flex-row justify-between items-center">
+            <div>
+              <Text
+                text={"Transaction Lines"}
+                sx={{
+                  fontSize: "1.1rem",
+                  fontWeight: "bold",
+                  color: "#1a1a1a",
+                }}
+              />
+            </div>
+            <div>
+              <FormControl fullWidth size="small">
+                <InputLabel id="account-type-label">Type</InputLabel>
+                <Select
+                  labelId="account-type-label"
+                  label="Type"
+                  value={"account"}
+                  sx={{
+                    fontSize: 12,
+                    ".MuiSelect-select": {
+                      paddingY: 0.6,
+                      paddingX: 13,
+                    },
+                  }}
+                >
+                  <MenuItem value="assets">Assets</MenuItem>
+                  <MenuItem value="liabilities">Liabilities</MenuItem>
+                  <MenuItem value="equity">Equity</MenuItem>
+                  <MenuItem value="revenue">Revenue</MenuItem>
+                  <MenuItem value="expenses">Expenses</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+          <hr
+            style={{
+              border: "none",
+              borderTop: "1px solid rgba(128, 128, 128, 0.5)", // gray + semi-transparent
+              marginTop: 8,
             }}
           />
         </div>
