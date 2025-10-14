@@ -8,12 +8,21 @@ import Text from "@src/components/Text";
 import { useState } from "react";
 import { mysqlDate } from "@src/utils/utils";
 
+// main holder of data to be passed on api
+import { useTransactionForm } from "@src/store/store";
+
 const TransactionDate = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
+  const { setTransaction } = useTransactionForm();
+
   // handle the logic here
   const handleChange = (transactionDate: string) => {
-    alert(transactionDate);
+    setTransaction({ transaction_date: transactionDate });
+
+    // Access latest value immediately after updating:
+    const newState = useTransactionForm.getState();
+    console.log("Updated TransactionDate:", newState.transaction);
   };
   return (
     <>

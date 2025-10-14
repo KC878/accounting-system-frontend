@@ -2,15 +2,25 @@
 import React, { useState } from "react";
 import Text from "@src/components/Text";
 import TextField from "@mui/material/TextField";
+import { useTransactionForm } from "@src/store/store";
 
 const Description = () => {
   const [description, setDescription] = useState("");
+
+  const { setTransaction } = useTransactionForm();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
     setDescription(value);
-    console.log(value);
+
+    setTimeout(() => {
+      setTransaction({ description: value });
+
+      // // Access latest value immediately after updating:
+      const newState = useTransactionForm.getState();
+      console.log("Updated Description:", newState.transaction);
+    }, 500);
   };
   return (
     <>

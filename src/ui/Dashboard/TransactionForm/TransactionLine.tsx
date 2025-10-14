@@ -40,7 +40,7 @@ const TransactionLine = () => {
     account: "",
     debit: "",
     credit: "",
-    description: "",
+    notes: "",
   });
 
   const [accountType, setAccountType] = useState<AccountType>({
@@ -226,8 +226,8 @@ const TransactionLine = () => {
 
       {/* Description */}
       <TextField
-        name="description"
-        value={formData.description}
+        name="notes"
+        value={formData.notes}
         onChange={handleInputChange}
         variant="outlined"
         fullWidth

@@ -10,9 +10,12 @@ import {
 import Text from "@src/components/Text";
 
 import { useDashboard } from "@src/store/store";
+import { useTransactionForm } from "@src/store/store";
 
 const CreatedBy = () => {
   const { dashboardState } = useDashboard();
+
+  const { setTransaction } = useTransactionForm();
 
   // bind the key of the user for now this is for displaying options
   const user = dashboardState.first_name + " " + dashboardState.last_name;
@@ -22,6 +25,14 @@ const CreatedBy = () => {
   // handle change event
   const handleChange = (event: SelectChangeEvent) => {
     setCreatedBy(event.target.value);
+
+    setTransaction({ created_by: event.target.value });
+
+    console.log(event.target.value);
+
+    // Access latest value immediately after updating:
+    const newState = useTransactionForm.getState();
+    console.log("Updated CreatedBy:", newState.transaction);
   };
   return (
     <>

@@ -1,4 +1,4 @@
-import type { DashboardType } from "@src/types/dashboardTypes";
+import type { DashboardType, TransactionFormType } from "@src/types/dashboardTypes";
 
 export interface DashboardState {
   dashboardState: DashboardType;
@@ -12,3 +12,8 @@ export interface DashboardState {
 }
 
 // this is for store 
+
+export interface TransactionFormState {
+  transaction: TransactionFormType;
+  setTransaction: (update: Partial<TransactionFormType>) => void; // ✅ FIXED
+}
