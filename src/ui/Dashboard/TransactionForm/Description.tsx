@@ -1,8 +1,17 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Text from "@src/components/Text";
 import TextField from "@mui/material/TextField";
 
 const Description = () => {
+  const [description, setDescription] = useState("");
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setDescription(value);
+    console.log(value);
+  };
   return (
     <>
       <Text
@@ -14,9 +23,13 @@ const Description = () => {
         }}
       />
       <TextField
+        name="description"
+        value={description}
         variant="outlined"
         fullWidth
         required
+        onChange={handleChange}
+        placeholder="Description"
         sx={{
           mb: 2,
           "& .MuiInputBase-root": {

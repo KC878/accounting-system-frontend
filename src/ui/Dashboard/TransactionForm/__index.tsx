@@ -5,14 +5,16 @@ import Box from "@mui/material/Box";
 import Text from "@src/components/Text";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import { FormControl, Select, MenuItem } from "@mui/material";
+
 import ClickableIcon from "@src/components/ClickableIcon";
 import { icon } from "@src/constants/icons";
 import TransactionLine from "./TransactionLine";
 import Description from "./Description";
 import TransactionDate from "./TransactionDate";
+import CreatedBy from "./CreatedBy";
+import { ModalProps } from "@src/interfaces/interfaces";
 
-const style = {
+const boxStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -22,19 +24,13 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-  maxHeight: "80vh", // limit modal height to 80% of viewport
+  maxHeight: "90vh", // limit modal height to 80% of viewport
   overflowY: "auto", // make content scroll vertically
   borderRadius: 2,
   scrollbarWidth: "thin",
   scrollbarColor: "rgba(0,0,0,0.2) transparent",
 };
 
-interface ModalProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  handleOpen: () => void;
-  handleClose: () => void;
-}
 const TransactionForm: React.FC<ModalProps> = ({
   open,
   setOpen,
@@ -49,7 +45,7 @@ const TransactionForm: React.FC<ModalProps> = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={boxStyle}>
           {/* <div className="flex justify-end"></div> */}
 
           <div className="overflow-auto">
@@ -88,44 +84,7 @@ const TransactionForm: React.FC<ModalProps> = ({
 
             {/* Created By */}
             <div className="flex flex-col gap-1">
-              <Text
-                text={"Created By"}
-                sx={{
-                  fontSize: "1.1rem",
-                  fontWeight: "bold",
-                  color: "#1a1a1a",
-                }}
-              />
-              <FormControl fullWidth>
-                <Select
-                  value={"Default Value"}
-                  //onChange
-                  displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
-                  renderValue={(selected) => {
-                    if (!selected) {
-                      return (
-                        <span style={{ color: "#aaa" }}>Select Gender</span>
-                      );
-                    }
-                    return selected.charAt(0).toUpperCase() + selected.slice(1);
-                  }}
-                  sx={{
-                    mb: 2,
-
-                    "& .MuiInputBase-input": {
-                      padding: "16px 12px", // adjust text padding inside
-                    },
-                  }}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
+              <CreatedBy />
             </div>
 
             {/* Description */}

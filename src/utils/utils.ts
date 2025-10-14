@@ -53,4 +53,18 @@ cookies.forEach((cookie) => {
     document.cookie = `${cookieName}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=none; secure`;
 });
 };
-    
+
+
+
+// mysqlDate — always returns date in Asia/Manila timezone
+export const mysqlDate = (date: Date): string => {
+  const phTime = new Date(
+    date.toLocaleString("en-US", { timeZone: "Asia/Manila" })
+  );
+
+  const yyyy = phTime.getFullYear();
+  const mm = String(phTime.getMonth() + 1).padStart(2, "0");
+  const dd = String(phTime.getDate()).padStart(2, "0");
+
+  return `${yyyy}-${mm}-${dd}`;
+};

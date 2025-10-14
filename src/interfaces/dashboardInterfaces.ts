@@ -10,3 +10,5 @@ export interface DashboardState {
   setError?: (error: string | null) => void;
 
 }
+
+// this is for store 

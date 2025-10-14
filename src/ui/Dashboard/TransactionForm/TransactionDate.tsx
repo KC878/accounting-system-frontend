@@ -6,10 +6,15 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 import Text from "@src/components/Text";
 import { useState } from "react";
+import { mysqlDate } from "@src/utils/utils";
 
 const TransactionDate = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
+  // handle the logic here
+  const handleChange = (transactionDate: string) => {
+    alert(transactionDate);
+  };
   return (
     <>
       <Text
@@ -24,7 +29,13 @@ const TransactionDate = () => {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
           value={selectedDate}
-          onChange={(newValue) => setSelectedDate(newValue)}
+          onChange={(newValue) => {
+            setSelectedDate(newValue);
+            if (newValue) {
+              const transactionDate = mysqlDate(newValue);
+              handleChange(transactionDate); // pass the formatted value
+            }
+          }}
           slotProps={{
             textField: {
               required: true,

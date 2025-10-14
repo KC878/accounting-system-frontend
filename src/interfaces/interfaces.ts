@@ -65,3 +65,10 @@ export interface TextProps {
   align?: "right" | "left" | "center" | "inherit" | "justify" | undefined;
   className?: string;
 }
+
+export interface ModalProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  handleOpen: () => void;
+  handleClose: () => void;
+}
