@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { DashboardState, TransactionFormState } from '@src/interfaces/dashboardInterfaces';
 
-
 export const useDashboard = create<DashboardState>()(
   persist(
     (set) => ({
@@ -29,8 +28,9 @@ export const useDashboard = create<DashboardState>()(
 );
 
 
-export const useTransactionForm = create<TransactionFormState>((set) => ({
-  transaction: {
+export const useTransactionForm = create<TransactionFormState>((set) => (
+  {
+    transaction: {
     account_name: "",
     account_type: "",
     normal_balance: "",

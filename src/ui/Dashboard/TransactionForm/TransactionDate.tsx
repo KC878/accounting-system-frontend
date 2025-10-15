@@ -5,7 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 import Text from "@src/components/Text";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { mysqlDate } from "@src/utils/utils";
 
 // main holder of data to be passed on api
@@ -16,6 +16,13 @@ const TransactionDate = () => {
 
   const { setTransaction } = useTransactionForm();
 
+  // store the default date --> today
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = mysqlDate(today);
+    setTransaction({ transaction_date: formattedDate });
+  }, []);
+
   // handle the logic here
   const handleChange = (transactionDate: string) => {
     setTransaction({ transaction_date: transactionDate });
@@ -24,6 +31,7 @@ const TransactionDate = () => {
     const newState = useTransactionForm.getState();
     console.log("Updated TransactionDate:", newState.transaction);
   };
+
   return (
     <>
       <Text

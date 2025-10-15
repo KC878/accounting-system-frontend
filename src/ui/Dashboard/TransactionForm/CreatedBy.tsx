@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   Select,
@@ -19,6 +19,11 @@ const CreatedBy = () => {
 
   // bind the key of the user for now this is for displaying options
   const user = dashboardState.first_name + " " + dashboardState.last_name;
+
+  // set the default and run once when mount
+  useEffect(() => {
+    setTransaction({ created_by: user });
+  }, []);
 
   const [createdBy, setCreatedBy] = useState<string>(user);
 

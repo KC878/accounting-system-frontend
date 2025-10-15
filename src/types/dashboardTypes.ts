@@ -22,3 +22,19 @@ export type TransactionFormType = {
   credit_amount: number;
   notes: string;
 }
+
+
+// transaction line
+export type Account = {
+  id: number;
+  accountName: string;
+  type: string;
+  description: string;
+  normalBalance: string;
+};
+
+// transaction line
+export type AccountType = {
+  type: string;
+  account: Account[];
+};
