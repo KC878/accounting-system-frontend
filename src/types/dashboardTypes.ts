@@ -22,8 +22,8 @@ export type TransactionLine = {
   normal_balance: string;
 
   // transactionline
-  debit_amount: number;
-  credit_amount: number;
+  debit_amount: number | null;
+  credit_amount: number | null;
   notes: string;
 }
 

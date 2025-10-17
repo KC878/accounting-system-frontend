@@ -25,21 +25,36 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
   const { transactionLine, setTransactionLine, updateTransactionLine } =
     useTransactionForm();
 
-  // ✅ Generate the initial empty lines when index changes
+  // localLines
+  const [localLines, setLocalLines] = React.useState(transactionLine);
+
+  // Generate the initial empty lines when index changes
+
+  // basically generates unbound state slots --> to mimic the number of objects to put on transactionLine array
   useEffect(() => {
-    const initialLines = Array.from({ length: index }, (_, i) => ({
-      id: i + 1,
-      account_name: "",
-      account_type: "",
-      normal_balance: "",
-      debit_amount: 0,
-      credit_amount: 0,
-      notes: "",
-    }));
+    if (transactionLine.length < index) {
+      const additional = Array.from(
+        { length: index - transactionLine.length },
+        () => ({
+          id: index + 1,
+          account_type: "",
+          account_name: "",
+          normal_balance: "",
+          debit_amount: null,
+          credit_amount: null,
+          notes: "",
+        })
+      );
+      console.log("TransationLine: ", transactionLine);
 
-    setTransactionLine(initialLines);
-  }, [index, setTransactionLine]);
+      setTransactionLine([...transactionLine, ...additional]);
+    }
 
+    // always sync local state
+    setLocalLines([...transactionLine]);
+  }, [index, transactionLine, setTransactionLine]);
+
+  // bound meta data for this --> select
   const accountValues = {
     assets: account.assets,
     equity: account.equity,
@@ -63,8 +78,9 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
     }
 
     if (name === "account") {
-      const currentType = transactionLine[lineIndex]
+      const currentType = localLines[lineIndex]
         .account_type as keyof typeof accountValues;
+
       const selectedAccount = accountValues[currentType]?.find(
         (acc) => acc.accountName === value
       );
@@ -78,29 +94,12 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
     }
   };
 
-  // 🧠 Handle Input Changes (Debit, Credit, Notes)
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    lineIndex: number
-  ) => {
-    const { name, value } = event.target;
-
-    const parsedValue =
-      name === "debit_amount" || name === "credit_amount"
-        ? Number(value)
-        : value;
-
-    updateTransactionLine(lineIndex, {
-      [name]: parsedValue,
-    });
-  };
-
   // ✅ Render each transaction line
   return (
     <>
-      {transactionLine.map((line, i) => (
+      {localLines.map((line, i) => (
         <div
-          key={line.id}
+          key={line.id ?? i}
           className="border border-gray-300 rounded-xl p-4 my-4 bg-white shadow-sm"
         >
           {/* Header */}
@@ -142,6 +141,7 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
                   value={line.account_name}
                   onChange={(event) => handleSelectChange(event, i)}
                   displayEmpty
+                  disabled={!line.account_type} // disable this field if account Type is empty
                 >
                   <MenuItem disabled value="">
                     Select Account
@@ -163,11 +163,29 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
               <TextField
                 size="small"
                 name="debit_amount"
-                value={line.debit_amount}
-                onChange={(event) => handleInputChange(event, i)}
+                value={line.debit_amount ?? ""}
+                onChange={(event) => {
+                  const newLines = [...localLines];
+                  newLines[i] = {
+                    ...newLines[i],
+                    debit_amount: Number(event.target.value),
+                  };
+                  setLocalLines(newLines);
+                }}
+                onBlur={(event) => {
+                  updateTransactionLine(i, {
+                    debit_amount: Number(event?.target.value),
+                  });
+                }}
                 variant="outlined"
                 fullWidth
                 type="number"
+                slotProps={{
+                  htmlInput: {
+                    min: 0, // this works
+                  },
+                }}
+                disabled={!line.account_type || (line.credit_amount ?? 0) > 0}
               />
             </div>
 
@@ -177,11 +195,29 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
               <TextField
                 size="small"
                 name="credit_amount"
-                value={line.credit_amount}
-                onChange={(event) => handleInputChange(event, i)}
+                value={line.credit_amount ?? ""}
+                onChange={(event) => {
+                  const newLines = [...localLines];
+                  newLines[i] = {
+                    ...newLines[i],
+                    credit_amount: Number(event.target.value),
+                  };
+                  setLocalLines(newLines);
+                }}
+                onBlur={(event) => {
+                  updateTransactionLine(i, {
+                    credit_amount: Number(event?.target.value),
+                  });
+                }}
                 variant="outlined"
                 fullWidth
                 type="number"
+                slotProps={{
+                  htmlInput: {
+                    min: 0, // this works
+                  },
+                }}
+                disabled={!line.account_type || (line.debit_amount ?? 0) > 0}
               />
             </div>
           </div>
@@ -191,11 +227,26 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
             size="small"
             name="notes"
             value={line.notes}
-            onChange={(event) => handleInputChange(event, i)}
+            onChange={(event) => {
+              const newLines = [...localLines];
+              newLines[i] = {
+                ...newLines[i],
+                notes: event.target.value,
+              };
+              setLocalLines(newLines);
+            }}
+            onBlur={(event) => {
+              updateTransactionLine(i, {
+                notes: event?.target.value,
+              });
+            }}
             variant="outlined"
             fullWidth
             placeholder="Notes"
-            sx={{ mt: 2 }}
+            sx={{
+              mt: 2,
+            }}
+            disabled={!line.account_type}
           />
         </div>
       ))}
