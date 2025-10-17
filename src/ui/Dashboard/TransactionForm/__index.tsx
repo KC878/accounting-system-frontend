@@ -14,6 +14,7 @@ import TransactionDate from "./TransactionDate";
 import CreatedBy from "./CreatedBy";
 import { ModalProps } from "@src/interfaces/interfaces";
 import { useTransactionForm } from "@src/store/store";
+import ResponsiveDialog from "@src/components/ResponsiveDialog";
 
 const boxStyle = {
   position: "absolute",
@@ -40,6 +41,12 @@ const TransactionForm: React.FC<ModalProps> = ({
 }) => {
   const [transactionLineIndex, setTransactionLineIndex] = useState(1);
 
+  const [openResponsiveDialog, setOpenResponsiveDialog] = useState(false);
+
+  const handleCloseResponsiveDialog = () => {
+    setOpenResponsiveDialog(false);
+  };
+
   const handleSubmit = () => {
     alert("submit");
 
@@ -63,11 +70,27 @@ const TransactionForm: React.FC<ModalProps> = ({
       }
     }
 
+    // check only if error = false
+    // temporary run the open dialog
+    setOpenResponsiveDialog(true);
+
     console.log("Transaction: ", state.transaction);
     console.log("TranasctionLine: ", state.transactionLine);
   };
   return (
     <div>
+      {openResponsiveDialog && (
+        <ResponsiveDialog
+          handleClose={handleCloseResponsiveDialog}
+          title={"Warning: Confirm Transaction"}
+          content={`You are about to submit this transaction. Please review the transaction lines carefully before confirming. Once submitted, the transaction cannot be undone.`}
+          textCancel={"Cancel"}
+          textConfirm={"Confirm"}
+          icon={icon.warning}
+          iconColor={"warning"}
+        />
+      )}
+
       <Modal
         open={open}
         // onClose={handleClose}

@@ -1,7 +1,9 @@
-import React from "react";
+// "use client";
 
-const page = () => {
-  return <div>page</div>;
-};
+// import React from "react";
+// import ResponsiveDialog from "@src/components/ResponsiveDialog";
+// const page = () => {
+//   return <ResponsiveDialog />;
+// };
 
-export default page;
+// export default page;

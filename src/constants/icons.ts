@@ -26,6 +26,9 @@ import CloseIcon from "@mui/icons-material/Close";
 // sex | gender
 import WcIcon from '@mui/icons-material/Wc';
 
+// warning 
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+
 export const icon = {
   username: LockPersonIcon,
   password: LockIcon,
@@ -49,4 +52,7 @@ export const icon = {
 
   close: CloseIcon,
   sex: WcIcon,
+
+  // responsive dialog
+  warning: WarningAmberIcon,
 };

@@ -22,3 +22,14 @@ export interface TransactionFormState {
   updateTransactionLine: (index: number, update: Partial<TransactionLine>) => void;
 
 }
+
+// responsive dialog
+export interface ResponsiveDialogProps {
+  handleClose: () => void;
+  title: string;
+  content: string;
+  textCancel: string;
+  textConfirm: string;
+  icon?: React.ElementType;
+  iconColor?: string;
+}
