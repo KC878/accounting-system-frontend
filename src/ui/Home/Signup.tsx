@@ -1,15 +1,14 @@
 "use client";
 
 import Form from "@src/components/Form";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import type { UserType, InputFieldType, HomeModeType } from "@src/types/types";
 import { registerUser } from "@src/services/userService";
 import { AxiosError } from "axios";
 import { icon } from "@src/constants/icons";
-
+import Notification from "@src/components/Notification";
 // onChange typing
 import { SelectChangeEvent } from "@mui/material/Select";
-import { useRouter } from "next/navigation";
 
 const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
   const [formData, setFormData] = useState<UserType>({
@@ -21,7 +20,14 @@ const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
     sex: "",
   });
 
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  // notifaction
+  const [notification, setNotification] = useState<{
+    id: number;
+    message: string;
+    severity: "error" | "success";
+  } | null>(null);
 
   // only store relevant keyfield with errors from UserType
   const [formError, setFormError] = useState<Partial<UserType>>({});
@@ -84,6 +90,7 @@ const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
     console.log("Form submitted:", formData);
 
     try {
+      setLoading(true);
       const result = await registerUser(formData);
 
       console.log("User registered", result);
@@ -98,8 +105,16 @@ const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
           last_name: "",
           sex: "",
         });
-        setFormError({});
 
+        setNotification({
+          id: Date.now(), // unique
+          message: "User created Successfully!",
+          severity: "success",
+        });
+        setFormError({});
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
         window.location.reload(); // just reload the entire page --> it will automatically set to login ui by default
       }
     } catch (err) {
@@ -114,8 +129,10 @@ const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
           ...prev,
           ...axiosErr.response?.data,
         }));
+        setLoading(false);
       } else {
         console.error("Registration Error: ", axiosErr.message);
+        setLoading(false);
       }
     }
   };
@@ -178,13 +195,22 @@ const Signup: React.FC<HomeModeType> = ({ homeUI, setHomeUI }) => {
 
   return (
     <div className="h-screen flex justify-center items-center bg-gray-100">
+      {notification && (
+        <div>
+          <Notification
+            key={notification.id}
+            message={notification.message}
+            severity={notification.severity}
+          />
+        </div>
+      )}
       <Form
         formHeaderTitle={"Signup"}
         formData={formData}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         input={input}
-        buttonSubmitName={"Signup"}
+        buttonSubmitName={loading ? "Loading" : "Signup"}
         homeMode={{
           homeUI,
           setHomeUI,

@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import type { UserType } from "@src/types/types";
 import type { FormProp } from "@src/interfaces/interfaces";
+import Loading from "@src/components/Loading";
 
 const fields: React.ElementType[] = [TextField, Select, MenuItem]; // declare this first
 
@@ -130,7 +131,11 @@ const Form: React.FC<FormProp> = ({
           fullWidth
           sx={{ mt: 2 }}
         >
-          {buttonSubmitName}
+          {buttonSubmitName === "Loading" ? (
+            <Loading size={24} color="inherit" />
+          ) : (
+            buttonSubmitName
+          )}
         </Button>
         <Button
           fullWidth
