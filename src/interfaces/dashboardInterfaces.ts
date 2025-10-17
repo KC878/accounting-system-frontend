@@ -1,4 +1,4 @@
-import type { DashboardType, TransactionFormType } from "@src/types/dashboardTypes";
+import type { DashboardType, TransactionFormType, TransactionLine } from "@src/types/dashboardTypes";
 
 export interface DashboardState {
   dashboardState: DashboardType;
@@ -15,5 +15,10 @@ export interface DashboardState {
 
 export interface TransactionFormState {
   transaction: TransactionFormType;
+  transactionLine: TransactionLine[];
+  
   setTransaction: (update: Partial<TransactionFormType>) => void; // ✅ FIXED
+  setTransactionLine: (transactionLine: TransactionLine[]) => void;
+  updateTransactionLine: (index: number, update: Partial<TransactionLine>) => void;
+
 }

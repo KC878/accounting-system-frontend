@@ -31,17 +31,14 @@ export const useDashboard = create<DashboardState>()(
 export const useTransactionForm = create<TransactionFormState>((set) => (
   {
     transaction: {
-    account_name: "",
-    account_type: "",
-    normal_balance: "",
-    created_by: "",
-    transaction_date: "",
-    description: "",
-    debit_amount: 0,
-    credit_amount: 0,
-    notes: "",
-  },
-    // ✅ partial update handler
+      created_by: "",
+      transaction_date: "",
+      description: "",
+    },
+    transactionLine: [],
+
+    
+    // partial update handler
     setTransaction: (update) =>
       set((state) => ({
         transaction: {
@@ -49,6 +46,18 @@ export const useTransactionForm = create<TransactionFormState>((set) => (
           ...update, // merge only changed fields
         },
       })),
+    
+    //replace entire transaction array
+    setTransactionLine: (lines) => set({ transactionLine: lines}),
+
+    // update specific item inside the array
+    updateTransactionLine: (index, update) => 
+      set((state) => {
+        const updated = [...state.transactionLine];
+        updated[index] = {...updated[index], ...update};
+
+        return { transactionLine: updated };
+      }) 
 }))
 
 

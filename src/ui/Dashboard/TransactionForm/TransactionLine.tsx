@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Text from "@src/components/Text";
 import TextField from "@mui/material/TextField";
 import {
@@ -10,11 +10,36 @@ import {
   InputLabel,
   SelectChangeEvent,
 } from "@mui/material";
-import type { AccountType } from "@src/types/dashboardTypes";
+
 import { account } from "@src/constants/accounts";
 import { useTransactionForm } from "@src/store/store";
 
-const TransactionLine = () => {
+interface TransactionLineLocalProp {
+  index: number; // number of lines to show
+}
+
+// study the logic, make sure to learn it
+// fix why lag
+
+const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
+  const { transactionLine, setTransactionLine, updateTransactionLine } =
+    useTransactionForm();
+
+  // ✅ Generate the initial empty lines when index changes
+  useEffect(() => {
+    const initialLines = Array.from({ length: index }, (_, i) => ({
+      id: i + 1,
+      account_name: "",
+      account_type: "",
+      normal_balance: "",
+      debit_amount: 0,
+      credit_amount: 0,
+      notes: "",
+    }));
+
+    setTransactionLine(initialLines);
+  }, [index, setTransactionLine]);
+
   const accountValues = {
     assets: account.assets,
     equity: account.equity,
@@ -23,62 +48,29 @@ const TransactionLine = () => {
     expenses: account.expenses,
   };
 
-  const [formData, setFormData] = useState({
-    type: "",
-    account: "",
-    debit: 0,
-    credit: 0,
-    notes: "",
-  });
-
-  const [accountType, setAccountType] = useState<AccountType>({
-    type: "",
-    account: [],
-  });
-
-  const { transaction, setTransaction } = useTransactionForm();
-
-  // inputCred_Deb
-  const inputCred_Deb = [
-    { text: "Debit", name: "debit", value: formData.debit },
-    { text: "Credit", name: "credit", value: formData.credit },
-  ];
-
-  const handleSelectChange = (event: SelectChangeEvent) => {
+  //  Handle Select Changes
+  const handleSelectChange = (event: SelectChangeEvent, lineIndex: number) => {
     const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // logic for select accountType
     if (name === "type") {
       const key = value as keyof typeof accountValues;
 
-      // store in variable first
-      const updatedType = {
-        type: key,
-        account: accountValues[key],
-      };
-
-      // update State
-      setAccountType(updatedType);
-
-      console.log("Account: ", updatedType);
-      // stores the immediate value of type
-      setTransaction({
-        account_type: updatedType.type,
+      updateTransactionLine(lineIndex, {
+        account_type: key,
+        account_name: "", // reset when changing type
+        normal_balance: "",
       });
     }
 
-    // logic for select account
     if (name === "account") {
-      // find the selected account based on the name
-
-      const selectedAccount = accountType.account.find(
-        (acc) => acc.accountName === value // find the value selected for account
+      const currentType = transactionLine[lineIndex]
+        .account_type as keyof typeof accountValues;
+      const selectedAccount = accountValues[currentType]?.find(
+        (acc) => acc.accountName === value
       );
 
       if (selectedAccount) {
-        // store both accountName and normalBalance into transaction
-        setTransaction({
+        updateTransactionLine(lineIndex, {
           account_name: selectedAccount.accountName,
           normal_balance: selectedAccount.normalBalance,
         });
@@ -86,63 +78,49 @@ const TransactionLine = () => {
     }
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // 🧠 Handle Input Changes (Debit, Credit, Notes)
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    lineIndex: number
+  ) => {
     const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (name === "debit") {
-      setTransaction({ debit_amount: Number(value) });
-    }
-    if (name === "credit") {
-      setTransaction({ credit_amount: Number(value) });
-    }
-    if (name === "notes") {
-      setTransaction({ notes: value });
-    }
 
-    console.log("Transaction: ", transaction);
+    const parsedValue =
+      name === "debit_amount" || name === "credit_amount"
+        ? Number(value)
+        : value;
+
+    updateTransactionLine(lineIndex, {
+      [name]: parsedValue,
+    });
   };
 
+  // ✅ Render each transaction line
   return (
-    <div className="flex flex-col">
-      {/* Header */}
-      <div className="flex flex-col my-2">
-        <div className="flex flex-row justify-between items-center">
-          <div>
+    <>
+      {transactionLine.map((line, i) => (
+        <div
+          key={line.id}
+          className="border border-gray-300 rounded-xl p-4 my-4 bg-white shadow-sm"
+        >
+          {/* Header */}
+          <div className="flex flex-row justify-between items-center mb-3">
             <Text
-              text="Transaction Lines"
+              text={`Transaction Line #${i + 1}`}
               sx={{
                 fontSize: "1.1rem",
                 fontWeight: "bold",
                 color: "#1a1a1a",
               }}
             />
-          </div>
-
-          <div>
-            <FormControl fullWidth size="small">
-              <InputLabel id="label-type">Type</InputLabel>
+            <FormControl fullWidth size="small" sx={{ width: 160 }}>
+              <InputLabel id={`label-type-${i}`}>Type</InputLabel>
               <Select
-                labelId="label-type"
+                labelId={`label-type-${i}`}
                 name="type"
                 label="Type"
-                value={formData.type}
-                onChange={handleSelectChange}
-                sx={{
-                  fontSize: 12,
-                  ".MuiSelect-select": {
-                    paddingY: 0.6,
-                    paddingX: 2,
-                    width: 60,
-                  },
-                }}
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 300, // 👈 add this
-                      overflowY: "auto",
-                    },
-                  },
-                }}
+                value={line.account_type}
+                onChange={(event) => handleSelectChange(event, i)}
               >
                 <MenuItem value="assets">Assets</MenuItem>
                 <MenuItem value="liabilities">Liabilities</MenuItem>
@@ -152,116 +130,76 @@ const TransactionLine = () => {
               </Select>
             </FormControl>
           </div>
-        </div>
-      </div>
 
-      {/* ACCOUNT, DEBIT, CREDIT */}
-      <div className="flex flex-row gap-4 mt-1">
-        {/* Account */}
-        <div className="flex-2 flex flex-col gap-1">
-          <Text
-            text="Account"
-            sx={{
-              fontSize: "1.1rem",
-              fontWeight: 600,
-              color: "#1a1a1a",
-            }}
-          />
-          <FormControl fullWidth>
-            <Select
-              name="account"
-              value={formData.account}
-              onChange={handleSelectChange}
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-              renderValue={(selected) => {
-                if (!selected)
-                  return <span style={{ color: "#aaa" }}>Select Account</span>;
+          {/* Account, Debit, Credit */}
+          <div className="flex flex-row gap-2">
+            {/* Account */}
+            <div className="flex flex-col gap-1 flex-[1.7]">
+              <Text text="Account" sx={{ fontSize: "1rem", fontWeight: 600 }} />
+              <FormControl fullWidth size="small">
+                <Select
+                  name="account"
+                  value={line.account_name}
+                  onChange={(event) => handleSelectChange(event, i)}
+                  displayEmpty
+                >
+                  <MenuItem disabled value="">
+                    Select Account
+                  </MenuItem>
+                  {accountValues[
+                    line.account_type as keyof typeof accountValues
+                  ]?.map((item, index) => (
+                    <MenuItem key={index} value={item.accountName}>
+                      {item.accountName}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
 
-                return (
-                  <span
-                    style={{
-                      display: "block",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {selected.charAt(0).toUpperCase() + selected.slice(1)}
-                  </span>
-                );
-              }}
-              sx={{
-                mb: 2,
-                "& .MuiInputBase-input": { padding: "9px 12px" },
-                overflow: "auto",
-                width: 180,
-              }}
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    maxHeight: 350,
-                    overflowY: "auto",
-                    scrollbarWidth: "thin",
-                    scrollbarColor: "rgba(0,0,0,0.2) transparent",
-                  },
-                },
-              }}
-            >
-              {accountType.account.map((item, index) => (
-                <MenuItem key={index} value={item.accountName}>
-                  {index + 1}. {item.accountName}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
+            {/* Debit */}
+            <div className="flex flex-col gap-1 flex-1">
+              <Text text="Debit" sx={{ fontSize: "1rem", fontWeight: 600 }} />
+              <TextField
+                size="small"
+                name="debit_amount"
+                value={line.debit_amount}
+                onChange={(event) => handleInputChange(event, i)}
+                variant="outlined"
+                fullWidth
+                type="number"
+              />
+            </div>
 
-        {/* Debit Credi  */}
-        {inputCred_Deb.map((item, index) => (
-          <div key={index} className="flex-[1.5] flex flex-col gap-1">
-            <Text
-              text={item.text}
-              sx={{
-                fontSize: "1.1rem",
-                fontWeight: 600,
-                color: "#1a1a1a",
-              }}
-            />
-            <TextField
-              name={item.name}
-              value={item.value}
-              onChange={handleInputChange}
-              variant="outlined"
-              fullWidth
-              required
-              type="number"
-              sx={{
-                mb: 2,
-                "& .MuiInputBase-root": { height: 40 },
-                "& .MuiInputBase-input": { padding: "8px 12px" },
-              }}
-            />
+            {/* Credit */}
+            <div className="flex flex-col gap-1 flex-1">
+              <Text text="Credit" sx={{ fontSize: "1rem", fontWeight: 600 }} />
+              <TextField
+                size="small"
+                name="credit_amount"
+                value={line.credit_amount}
+                onChange={(event) => handleInputChange(event, i)}
+                variant="outlined"
+                fullWidth
+                type="number"
+              />
+            </div>
           </div>
-        ))}
-      </div>
 
-      {/* Description */}
-      <TextField
-        name="notes"
-        value={formData.notes}
-        onChange={handleInputChange}
-        variant="outlined"
-        fullWidth
-        required
-        placeholder="Notes"
-        sx={{
-          mb: 2,
-          "& .MuiInputBase-root": { height: 40 },
-          "& .MuiInputBase-input": { padding: "8px 12px" },
-        }}
-      />
-    </div>
+          {/* Notes */}
+          <TextField
+            size="small"
+            name="notes"
+            value={line.notes}
+            onChange={(event) => handleInputChange(event, i)}
+            variant="outlined"
+            fullWidth
+            placeholder="Notes"
+            sx={{ mt: 2 }}
+          />
+        </div>
+      ))}
+    </>
   );
 };
 

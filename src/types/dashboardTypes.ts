@@ -7,15 +7,19 @@ export type DashboardType = {
 }
 
 export type TransactionFormType = {
-  // account
-  account_name: string;
-  account_type: string;
-  normal_balance: string;
-
   // transaction
   created_by: string;
   transaction_date: string;
   description: string;
+}
+
+// transactionline -- data 
+export type TransactionLine = {
+  id: number,
+  // account
+  account_name: string;
+  account_type: string;
+  normal_balance: string;
 
   // transactionline
   debit_amount: number;
@@ -23,8 +27,7 @@ export type TransactionFormType = {
   notes: string;
 }
 
-
-// transaction line
+// transaction line --> state
 export type Account = {
   id: number;
   accountName: string;

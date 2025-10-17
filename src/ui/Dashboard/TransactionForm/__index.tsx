@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Text from "@src/components/Text";
 import Modal from "@mui/material/Modal";
@@ -37,6 +37,8 @@ const TransactionForm: React.FC<ModalProps> = ({
   handleOpen,
   handleClose,
 }) => {
+  const [transactionLineIndex, setTransactionLineIndex] = useState(1);
+
   return (
     <div>
       <Modal
@@ -94,12 +96,15 @@ const TransactionForm: React.FC<ModalProps> = ({
 
             {/* Transaction Lines */}
 
-            <div className="border border-gray-300 p-2">
-              <TransactionLine />
-            </div>
+            <TransactionLine index={transactionLineIndex} />
+            
             {/* Buttons */}
             <div className="flex flex-row justify-between mt-5">
-              <Button>
+              <Button
+                onClick={() => {
+                  setTransactionLineIndex(transactionLineIndex + 1);
+                }}
+              >
                 <icon.add />
                 <p>Add Line</p>
               </Button>
