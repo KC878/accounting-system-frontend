@@ -13,6 +13,7 @@ import Description from "./Description";
 import TransactionDate from "./TransactionDate";
 import CreatedBy from "./CreatedBy";
 import { ModalProps } from "@src/interfaces/interfaces";
+import { useTransactionForm } from "@src/store/store";
 
 const boxStyle = {
   position: "absolute",
@@ -39,6 +40,32 @@ const TransactionForm: React.FC<ModalProps> = ({
 }) => {
   const [transactionLineIndex, setTransactionLineIndex] = useState(1);
 
+  const handleSubmit = () => {
+    alert("submit");
+
+    const state = useTransactionForm.getState(); // get the full state -->
+
+    const transactionLine = state.transactionLine;
+
+    // assign error = true if there exist error for it
+    for (let i = 0; i < transactionLine.length; i++) {
+      if (
+        transactionLine[i].account_type === "" ||
+        transactionLine[i].account_name === "" ||
+        (transactionLine[i].debit_amount === null &&
+          transactionLine[i].credit_amount === null) ||
+        (transactionLine[i].debit_amount === 0 &&
+          transactionLine[i].credit_amount === 0)
+      ) {
+        state.updateTransactionLine(i, { error: true });
+      } else {
+        state.updateTransactionLine(i, { error: false });
+      }
+    }
+
+    console.log("Transaction: ", state.transaction);
+    console.log("TranasctionLine: ", state.transactionLine);
+  };
   return (
     <div>
       <Modal
@@ -97,7 +124,7 @@ const TransactionForm: React.FC<ModalProps> = ({
             {/* Transaction Lines */}
 
             <TransactionLine index={transactionLineIndex} />
-            
+
             {/* Buttons */}
             <div className="flex flex-row justify-between mt-5">
               <Button
@@ -108,7 +135,7 @@ const TransactionForm: React.FC<ModalProps> = ({
                 <icon.add />
                 <p>Add Line</p>
               </Button>
-              <Button>Submit Transaction</Button>
+              <Button onClick={handleSubmit}>Submit Transaction</Button>
             </div>
           </div>
         </Box>

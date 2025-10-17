@@ -7,6 +7,7 @@ export type DashboardType = {
 }
 
 export type TransactionFormType = {
+  
   // transaction
   created_by: string;
   transaction_date: string;
@@ -16,6 +17,7 @@ export type TransactionFormType = {
 // transactionline -- data 
 export type TransactionLine = {
   id: number,
+  error: boolean,
   // account
   account_name: string;
   account_type: string;

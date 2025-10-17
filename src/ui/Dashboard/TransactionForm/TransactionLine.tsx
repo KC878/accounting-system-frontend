@@ -13,6 +13,7 @@ import {
 
 import { account } from "@src/constants/accounts";
 import { useTransactionForm } from "@src/store/store";
+import { formatName } from "@src/utils/utils";
 
 interface TransactionLineLocalProp {
   index: number; // number of lines to show
@@ -37,9 +38,10 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
         { length: index - transactionLine.length },
         () => ({
           id: index + 1,
+          error: false,
           account_type: "",
           account_name: "",
-          normal_balance: "",
+          normal_balance: "None",
           debit_amount: null,
           credit_amount: null,
           notes: "",
@@ -73,7 +75,7 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
       updateTransactionLine(lineIndex, {
         account_type: key,
         account_name: "", // reset when changing type
-        normal_balance: "",
+        normal_balance: "None",
       });
     }
 
@@ -112,7 +114,12 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
                 color: "#1a1a1a",
               }}
             />
-            <FormControl fullWidth size="small" sx={{ width: 160 }}>
+            <FormControl
+              fullWidth
+              size="small"
+              sx={{ width: 160 }}
+              error={line.error && line.account_type === ""} // 1st: if line.error = true && empty
+            >
               <InputLabel id={`label-type-${i}`}>Type</InputLabel>
               <Select
                 labelId={`label-type-${i}`}
@@ -135,7 +142,12 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
             {/* Account */}
             <div className="flex flex-col gap-1 flex-[1.7]">
               <Text text="Account" sx={{ fontSize: "1rem", fontWeight: 600 }} />
-              <FormControl fullWidth size="small">
+              <FormControl
+                fullWidth
+                size="small"
+                sx={{ width: 200 }}
+                error={line.error && line.account_name === ""}
+              >
                 <Select
                   name="account"
                   value={line.account_name}
@@ -159,7 +171,14 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
 
             {/* Debit */}
             <div className="flex flex-col gap-1 flex-1">
-              <Text text="Debit" sx={{ fontSize: "1rem", fontWeight: 600 }} />
+              <Text
+                text="Debit"
+                sx={{
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  color: (line.credit_amount ?? 0) > 0 ? "gray" : "",
+                }}
+              />
               <TextField
                 size="small"
                 name="debit_amount"
@@ -186,12 +205,23 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
                   },
                 }}
                 disabled={!line.account_type || (line.credit_amount ?? 0) > 0}
+                error={
+                  (line.error && line.debit_amount === null) ||
+                  (line.debit_amount === 0 && line.credit_amount === 0)
+                }
               />
             </div>
 
             {/* Credit */}
             <div className="flex flex-col gap-1 flex-1">
-              <Text text="Credit" sx={{ fontSize: "1rem", fontWeight: 600 }} />
+              <Text
+                text="Credit"
+                sx={{
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  color: (line.debit_amount ?? 0) > 0 ? "gray" : "",
+                }}
+              />
               <TextField
                 size="small"
                 name="credit_amount"
@@ -218,6 +248,10 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
                   },
                 }}
                 disabled={!line.account_type || (line.debit_amount ?? 0) > 0}
+                error={
+                  (line.error && line.credit_amount === null) ||
+                  (line.debit_amount === 0 && line.credit_amount === 0)
+                }
               />
             </div>
           </div>
@@ -248,6 +282,20 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
             }}
             disabled={!line.account_type}
           />
+
+          <div className="flex justify-end mt-2 gap-1 mr-1 items-center">
+            {["Normal Balance: ", line.normal_balance].map((word, index) => (
+              <Text
+                key={index}
+                text={index > 0 ? `${formatName(word)}` : `${word}`}
+                sx={{
+                  fontSize: "0.5rem",
+                  fontWeight: index > 0 ? 600 : "initial",
+                  color: index > 0 ? "black" : "rgba(0,0,0,0.5)",
+                }}
+              />
+            ))}
+          </div>
         </div>
       ))}
     </>
