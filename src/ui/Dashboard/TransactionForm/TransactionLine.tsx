@@ -276,7 +276,7 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
             }}
             variant="outlined"
             fullWidth
-            placeholder="Notes"
+            placeholder="Notes (Optional)"
             sx={{
               mt: 2,
             }}

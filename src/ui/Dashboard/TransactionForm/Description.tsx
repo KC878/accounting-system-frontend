@@ -39,7 +39,7 @@ const Description = () => {
         fullWidth
         required
         onChange={handleChange}
-        placeholder="Description"
+        placeholder="Description (Optional)"
         sx={{
           mb: 2,
           "& .MuiInputBase-root": {
