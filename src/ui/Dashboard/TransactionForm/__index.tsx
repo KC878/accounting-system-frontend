@@ -86,6 +86,8 @@ const TransactionForm: React.FC<ModalProps> = ({
           reset(); // reset the store data
           console.log("Transaction successfully created:", result);
 
+          setTransactionLineIndex(1); // reset to one transaction line
+
           setNotification({
             id: Date.now(), // unique
             message: "Transaction Created Successfully!",
