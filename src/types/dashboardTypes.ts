@@ -45,3 +45,10 @@ export type AccountType = {
 };
 
 
+/// Filtered Form Type
+export type TransactionFormPost = {
+  created_by: string;
+  transaction_date: string;
+  description: string;
+  transaction_lines: Partial<TransactionLine>[];
+} 

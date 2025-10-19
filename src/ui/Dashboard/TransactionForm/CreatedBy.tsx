@@ -19,10 +19,11 @@ const CreatedBy = () => {
 
   // bind the key of the user for now this is for displaying options
   const user = dashboardState.first_name + " " + dashboardState.last_name;
+  const username = dashboardState.username;
 
   // set the default and run once when mount
   useEffect(() => {
-    setTransaction({ created_by: user });
+    setTransaction({ created_by: username });
   }, []);
 
   const [createdBy, setCreatedBy] = useState<string>(user);
@@ -69,8 +70,9 @@ const CreatedBy = () => {
               padding: "16px 12px", // adjust text padding inside
             },
           }}
+          disabled
         >
-          <MenuItem value={user}>{user}</MenuItem>
+          <MenuItem value={username}>{user}</MenuItem>
           <MenuItem value={"user2"}>User 2</MenuItem>
           <MenuItem value={"user3"}>User 3</MenuItem>
         </Select>

@@ -1,7 +1,5 @@
 
 export const formatName = (name: string) => {
-  console.log("FormatName Counter");
-
   // Capitalize the firsst letter of each word
   return name.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" "); 
 }

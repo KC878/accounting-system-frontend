@@ -20,12 +20,14 @@ export interface TransactionFormState {
   setTransaction: (update: Partial<TransactionFormType>) => void; // ✅ FIXED
   setTransactionLine: (transactionLine: TransactionLine[]) => void;
   updateTransactionLine: (index: number, update: Partial<TransactionLine>) => void;
-
+  reset: () => void;
 }
 
 // responsive dialog
 export interface ResponsiveDialogProps {
+  loading: boolean;
   handleClose: () => void;
+  handleConfirm: () => void;
   title: string;
   content: string;
   textCancel: string;

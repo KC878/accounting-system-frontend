@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Text from "@src/components/Text";
 import Modal from "@mui/material/Modal";
@@ -15,6 +15,13 @@ import CreatedBy from "./CreatedBy";
 import { ModalProps } from "@src/interfaces/interfaces";
 import { useTransactionForm } from "@src/store/store";
 import ResponsiveDialog from "@src/components/ResponsiveDialog";
+import { getCookie } from "@src/utils/utils";
+import { AxiosError } from "axios";
+
+import { createTransaction } from "@src/services/userService";
+import Notification from "@src/components/Notification";
+
+import type { TransactionFormPost } from "@src/types/dashboardTypes";
 
 const boxStyle = {
   position: "absolute",
@@ -43,45 +50,92 @@ const TransactionForm: React.FC<ModalProps> = ({
 
   const [openResponsiveDialog, setOpenResponsiveDialog] = useState(false);
 
+  const { transaction, transactionLine, updateTransactionLine, reset } =
+    useTransactionForm();
+
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [notification, setNotification] = useState<{
+    id: number;
+    message: string;
+    severity: "error" | "success";
+  } | null>(null);
+
+  let hasError = false; // error handler for transactionLines
+
   const handleCloseResponsiveDialog = () => {
     setOpenResponsiveDialog(false);
+  };
+
+  const handleConfirmTransaction = async () => {
+    try {
+      setLoading(true);
+
+      if (!hasError) {
+        const payload: TransactionFormPost = {
+          created_by: transaction.created_by,
+          transaction_date: transaction.transaction_date,
+          description: transaction.description,
+          transaction_lines: transactionLine,
+        };
+
+        const csrftoken = getCookie("csrftoken")!;
+        const result = await createTransaction(csrftoken, payload);
+
+        if (result.status === 201) {
+          reset(); // reset the store data
+          console.log("Transaction successfully created:", result);
+
+          setNotification({
+            id: Date.now(), // unique
+            message: "Transaction Created Successfully!",
+            severity: "success",
+          });
+          setTimeout(() => {
+            setOpen(false); // close after delay
+          }, 1000); // dealy 3 seconds to show notif
+        }
+      }
+    } catch (err) {
+      const axiosErr = err as AxiosError<any>;
+      console.error("Transaction Error: ", axiosErr);
+    } finally {
+      setLoading(false); // always stop loading
+      setOpenResponsiveDialog(false);
+    }
   };
 
   const handleSubmit = () => {
     alert("submit");
 
-    const state = useTransactionForm.getState(); // get the full state -->
-
-    const transactionLine = state.transactionLine;
-
     // assign error = true if there exist error for it
     for (let i = 0; i < transactionLine.length; i++) {
+      const line = transactionLine[i];
+
       if (
-        transactionLine[i].account_type === "" ||
-        transactionLine[i].account_name === "" ||
-        (transactionLine[i].debit_amount === null &&
-          transactionLine[i].credit_amount === null) ||
-        (transactionLine[i].debit_amount === 0 &&
-          transactionLine[i].credit_amount === 0)
+        line.account_type === "" ||
+        line.account_name === "" ||
+        (line.debit_amount === null && line.credit_amount === null) ||
+        (line.debit_amount === 0 && line.credit_amount === 0)
       ) {
-        state.updateTransactionLine(i, { error: true });
+        updateTransactionLine(i, { error: true });
+        hasError = true;
       } else {
-        state.updateTransactionLine(i, { error: false });
+        updateTransactionLine(i, { error: false });
       }
     }
 
-    // check only if error = false
-    // temporary run the open dialog
-    setOpenResponsiveDialog(true);
-
-    console.log("Transaction: ", state.transaction);
-    console.log("TranasctionLine: ", state.transactionLine);
+    if (!hasError) {
+      setOpenResponsiveDialog(true);
+    }
   };
   return (
     <div>
       {openResponsiveDialog && (
         <ResponsiveDialog
+          loading={loading}
           handleClose={handleCloseResponsiveDialog}
+          handleConfirm={handleConfirmTransaction}
           title={"Warning: Confirm Transaction"}
           content={`You are about to submit this transaction. Please review the transaction lines carefully before confirming. Once submitted, the transaction cannot be undone.`}
           textCancel={"Cancel"}
@@ -89,6 +143,15 @@ const TransactionForm: React.FC<ModalProps> = ({
           icon={icon.warning}
           iconColor={"warning"}
         />
+      )}
+      {notification && (
+        <div>
+          <Notification
+            key={notification.id}
+            message={notification.message}
+            severity={notification.severity}
+          />
+        </div>
       )}
 
       <Modal

@@ -27,17 +27,20 @@ export const useDashboard = create<DashboardState>()(
   )
 );
 
+// initial State
+const initialState = {
+  transaction: {
+    created_by: "",
+    transaction_date: "",
+    description: "",
+  },
+  transactionLine: [],
+}
 
 export const useTransactionForm = create<TransactionFormState>((set) => (
   {
-    transaction: {
-      created_by: "",
-      transaction_date: "",
-      description: "",
-    },
-    transactionLine: [],
+    ...initialState, 
 
-    
     // partial update handler
     setTransaction: (update) =>
       set((state) => ({
@@ -57,7 +60,9 @@ export const useTransactionForm = create<TransactionFormState>((set) => (
         updated[index] = {...updated[index], ...update};
 
         return { transactionLine: updated };
-      }) 
+      }), 
+
+    reset: () => set(initialState),
 }))
 
 

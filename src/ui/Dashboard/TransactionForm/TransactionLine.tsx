@@ -101,7 +101,7 @@ const TransactionLine: React.FC<TransactionLineLocalProp> = ({ index }) => {
     <>
       {localLines.map((line, i) => (
         <div
-          key={line.id ?? i}
+          key={i}
           className="border border-gray-300 rounded-xl p-4 my-4 bg-white shadow-sm"
         >
           {/* Header */}
