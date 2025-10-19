@@ -63,6 +63,11 @@ const TransactionForm: React.FC<ModalProps> = ({
 
   let hasError = false; // error handler for transactionLines
 
+  const handleCloseForm = () => {
+    reset(); // clear the transactionline in store
+    setTransactionLineIndex(1); // reset line count to initial
+    handleClose(); // close the modal
+  };
   const handleCloseResponsiveDialog = () => {
     setOpenResponsiveDialog(false);
   };
@@ -172,12 +177,13 @@ const TransactionForm: React.FC<ModalProps> = ({
                 text={"Transaction Form"}
                 sx={{ fontSize: "2rem", fontWeight: "bold", color: "#1a1a1a" }}
               />
+
               <ClickableIcon
                 className={
                   "flex items-center justify-center h-[2rem] w-[2rem] hover:bg-gray-100"
                 }
                 icon={icon.close}
-                functionClick={handleClose}
+                functionClick={handleCloseForm}
                 functionType={"close-transaction-form"}
                 color={"gray"}
                 fontSize={30}
